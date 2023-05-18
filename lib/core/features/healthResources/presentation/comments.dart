@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:health_resources/core/features/healthResources/domain/repository/commentRepository.dart';
-import 'package:health_resources/core/features/healthResources/presentation/blocs/comments_state.dart';
-import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
-import 'package:health_resources/core/features/healthResources/presentation/blocs/comments_events.dart';
-
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Comments extends StatefulWidget {
   const Comments({Key? key}) : super(key: key);
@@ -14,13 +9,6 @@ class Comments extends StatefulWidget {
 }
 
 class _CommentsState extends State<Comments> {
-  bool isLiked = false;
-
-  _pressed() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +124,10 @@ class _CommentsState extends State<Comments> {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: () => _pressed(),
+                                onPressed:(){},
                                 icon: Icon(Icons.favorite,
-                                    color: isLiked
-                                        ? Colors.blue[900]
-                                        : Colors.black12),
+                                    color: Colors.blue[900]
+                                ),
                               ),
                               Text(" 2 likes"),
                             ],
@@ -156,7 +143,7 @@ class _CommentsState extends State<Comments> {
                 child: TextField(
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                        onPressed: () => print("print"),
+                        onPressed: () {},
                         icon: Icon(
                           Icons.send_rounded,
                           color: Colors.blue[900],

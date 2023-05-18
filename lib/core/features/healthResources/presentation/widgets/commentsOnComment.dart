@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
-// import 'package:health_resources/core/features/healthResources/presentation/blocs/comments_state.dart';
-// import 'package:health_resources/core/features/healthResources/presentation/blocs/comments_events.dart';
-
 class CommentsOnComment extends StatefulWidget {
   const CommentsOnComment({Key? key}) : super(key: key);
 
@@ -13,13 +8,6 @@ class CommentsOnComment extends StatefulWidget {
 }
 
 class _CommentsOnCommentState extends State<CommentsOnComment> {
-  bool isLiked = false;
-
-  _pressed() {
-    setState(() {
-      isLiked = !isLiked;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,15 +100,16 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
                           '6 comment(s)',
                           style: TextStyle(color: Colors.black),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          print("comments")
+                        },
                       ),
                       VerticalDivider(thickness: 2),
                       TextButton.icon(
                         icon: IconButton(
-                          onPressed: () => _pressed(),
+                          onPressed: (){},
                           icon: Icon(Icons.favorite,
-                              color:
-                                  isLiked ? Colors.blue[900] : Colors.black12),
+                              color: Colors.black12),
                         ),
                         label: Text(
                           '2',
@@ -210,11 +199,10 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
                             child: Row(
                               children: [
                                 IconButton(
-                                  onPressed: () => _pressed(),
+                                  onPressed: () {},
                                   icon: Icon(Icons.favorite,
-                                      color: isLiked
-                                          ? Colors.blue[900]
-                                          : Colors.black12),
+                                      color: Colors.blue[900]
+                                  ),
                                 ),
                                 Text(" 2 likes"),
                               ],
@@ -230,7 +218,7 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
                   child: TextField(
                     decoration: InputDecoration(
                       suffixIcon: IconButton(
-                          onPressed: () => print("print"),
+                          onPressed: () {},
                           icon: Icon(
                             Icons.send_rounded,
                             color: Colors.blue[900],
@@ -254,28 +242,5 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
         ),
       ),
     );
-    //   BlocProvider(
-    //   create: (context) => CommentsBloc(
-    //     RepositoryProvider.of<CommentRepository>(context),
-    //   )..add(LoadCommentsEvent()),
-    //   child: Scaffold(
-    //     body:
-    //         BlocBuilder<CommentsBloc, CommentsState>(builder: (context, state) {
-    //       if (state is CommentsLoadingState) {
-    //         return Center(
-    //           child: CircularProgressIndicator(),
-    //         );
-    //       } else if (state is CommentsLoadedState) {
-    //         List<String> comments = [];
-    //         return
-    //           ;
-    //       } else if (state is CommentsErrorState) {
-    //         return Center(
-    //           child: Text("Error 404"),
-    //         );
-    //       }
-    //     }),
-    //   ),
-    // );
   }
 }
