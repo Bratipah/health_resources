@@ -39,7 +39,7 @@ class Articles extends StatelessWidget {
       body: Container(
           padding: EdgeInsets.all(10),
           child: GestureDetector(
-            onTaps: () => Navigator.push(
+            onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => RepositoryProvider(

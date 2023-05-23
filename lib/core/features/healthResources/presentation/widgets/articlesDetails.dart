@@ -6,7 +6,6 @@ import 'package:health_resources/core/features/healthResources/presentation/bloc
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_events.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_states.dart';
-import 'package:flutter_html/flutter_html.dart';
 import '../comments.dart';
 
 class ArticlesDetails extends StatefulWidget {
