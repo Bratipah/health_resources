@@ -44,7 +44,7 @@ class _ChatPageState extends State<ChatPage>
                     )));
               },
             ),
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.white,
             elevation: 0,
             title: Text(
               "Inbox",
@@ -52,15 +52,16 @@ class _ChatPageState extends State<ChatPage>
             ),
           ),
           body: Container(
-            color: Colors.transparent,
+            color: Colors.white,
             child: DefaultTabController(
               length: 2,
               child: Scaffold(
                 body: Column(
+
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      color: Colors.transparent,
+                      margin: EdgeInsets.only(bottom: 5),
+                      color: Colors.white,
                       child: Padding(
                         padding: EdgeInsets.all(10),
                         child: Align(
@@ -103,7 +104,7 @@ class _ChatPageState extends State<ChatPage>
                     Container(
                       width: double.maxFinite,
                       //bottom overflowed
-                      height: 650,
+                      height: 630,
                       child: TabBarView(
                         controller: _controller,
                         children: [
