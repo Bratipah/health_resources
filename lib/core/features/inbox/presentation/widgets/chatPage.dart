@@ -45,78 +45,60 @@ class _ChatPageState extends State<ChatPage>
               },
             ),
             backgroundColor: Colors.white,
+            toolbarHeight: kToolbarHeight + 1,
             elevation: 0,
             title: Text(
               "Inbox",
               style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
             ),
-          ),
-          body: Container(
-            color: Colors.white,
-            child: DefaultTabController(
-              length: 2,
-              child: Scaffold(
-                body: Column(
-
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(bottom: 5),
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: TabBar(
-                            controller: _controller,
-                            indicator: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              color: Colors.blue[900],
-                            ),
-                            labelColor: Colors.white,
-                            labelStyle: TextStyle(color: Colors.white),
-                            unselectedLabelColor: Colors.black54,
-                            unselectedLabelStyle:
-                            TextStyle(color: Colors.black54),
-                            tabs: [
-                              Tab(
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    "Messages",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ),
-                              Tab(
-                                child: Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Text(
-                                    "Notifications",
-                                  ),
-                                ),
-                              ),
-                            ],
-                            // onTap: ,
-                          ),
-                        ),
-                      ),
+            bottom: TabBar(
+              controller: _controller,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(7),
+                color: Colors.blue[900],
+              ),
+              labelColor: Colors.white,
+              labelStyle: TextStyle(color: Colors.white),
+              unselectedLabelColor: Colors.black54,
+              unselectedLabelStyle:
+              TextStyle(color: Colors.black54),
+              tabs: [
+                Tab(
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Messages",
+                      style: TextStyle(fontSize: 16),
                     ),
-                    Container(
-                      width: double.maxFinite,
-                      //bottom overflowed
-                      height: 630,
-                      child: TabBarView(
-                        controller: _controller,
-                        children: [
-                         Messages(),
-                          Notifications(),
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
+                Tab(
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Notifications",
+                    ),
+                  ),
+                ),
+              ],
+              // onTap: ,
+            ),
+          ),
+          body: DefaultTabController(
+            length: 2,
+            child:Container(
+              width: double.maxFinite,
+              //bottom overflowed
+              height: 630,
+              child: TabBarView(
+                controller: _controller,
+                children: [
+                  Messages(),
+                  Notifications(),
+                ],
               ),
             ),
-          ));
+          ),
+      );
   }
 }

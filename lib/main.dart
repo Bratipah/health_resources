@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
       title: 'Health Resources',
       theme: ThemeData(
         useMaterial3: true,
+          appBarTheme: AppBarTheme(
+            elevation: 0, // This removes the shadow from all App Bars.
+          )
       ),
       home: ChatPage(),
       // Articles(),
