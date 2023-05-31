@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:health_resources/core/features/healthResources/presentation/articles.dart';
+import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
+import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';
+// import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
 import 'package:health_resources/core/features/inbox/presentation/widgets/chatPage.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,8 +25,25 @@ class MyApp extends StatelessWidget {
             elevation: 0, // This removes the shadow from all App Bars.
           )
       ),
-      home: ChatPage(),
-      // Articles(),
+      home: Scaffold(
+        body: MultiBlocProvider(
+            providers: [
+              BlocProvider<ArticleBloc>(
+                  create: (_) => ArticleBloc(ArticleRepository())
+              ),
+              // BlocProvider<CommentBloc>(
+              //     create: (_) =>CommentsBloc()
+              // ),
+            ],
+          child: Builder(builder: (context) {
+            return
+              Text("ARticles");
+              // Articles();
+          }
+          ),
+        ) ,
+      )
+      // ChatPage(),
       // ArticleDetails(),
     );
   }

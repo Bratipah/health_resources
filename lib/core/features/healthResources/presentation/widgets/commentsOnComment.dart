@@ -101,7 +101,7 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
                           style: TextStyle(color: Colors.black),
                         ),
                         onPressed: () {
-                          print("comments")
+                          print("comments");
                         },
                       ),
                       VerticalDivider(thickness: 2),

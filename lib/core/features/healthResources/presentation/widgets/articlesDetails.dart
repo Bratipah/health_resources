@@ -54,12 +54,12 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
         body: BlocBuilder<ArticleBloc, ArticleState>(builder: (context, state) {
           // final ArticleRepository articleRepository;
 
-          if (state is ArticleLoadingState) {
+          if (state is LoadingState) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          if (state is ArticleLoadedState) {
+          if (state is LoadedState) {
             // List<ArticleModel> articles = state.articles;
             // TextEditingController commentController = TextEditingController();
             // TextEditingController likeController = TextEditingController();
@@ -307,7 +307,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
               ),
             );
           }
-          if (state is ArticleErrorState) {
+          if (state is ErrorState) {
             return Center(
               child: Text("Error 404"),
             );
