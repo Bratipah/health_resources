@@ -11,8 +11,3 @@ class FetchArticleEvent extends ArticleEvent {
   List<Object?> get props => [];
 }
 class EmptyEvent extends ArticleEvent {}
-
-
-// class CommentArticleEvent extends ArticleEvent {
-//
-// }

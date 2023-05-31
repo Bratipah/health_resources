@@ -18,11 +18,13 @@ class ArticlesDetails extends StatefulWidget {
 class _ArticlesDetailsState extends State<ArticlesDetails> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ArticleBloc(
-        RepositoryProvider.of<ArticleRepository>(context),
-      )..add(LoadArticleEvent()),
-      child: Scaffold(
+    return
+      // BlocProvider(
+      // create: (context) => ArticleBloc(
+      //   RepositoryProvider.of<ArticleRepository>(context),
+      // )..add(LoadArticleEvent()),
+      // child:
+      Scaffold(
         extendBody: true,
         appBar: AppBar(
           leading: IconButton(
@@ -314,7 +316,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
           }
           return SizedBox();
         }),
-      ),
-    );
+      );
+    // );
   }
 }
