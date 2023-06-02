@@ -123,8 +123,8 @@ class _ArticlesState extends State<Articles> {
                               height: 10,
                             ),
                             Text(
-                              "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
-                              // contenttext,
+                              // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
+                              content ?? "",
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
