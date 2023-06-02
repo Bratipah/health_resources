@@ -4,7 +4,7 @@ import 'package:http/http.dart'as http;
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 
 class ArticleRepository {
-  String endpoint = "https://staging.afyarekod.com/resource";
+  String endpoint = "https://staging.afyarekod.com/resource/";
 
       Future<List<ArticleModel>> fetchArticles() async {
       final response = await http.get(

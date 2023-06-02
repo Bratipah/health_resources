@@ -55,6 +55,18 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
         ..add('updated')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.views;
+    if (value != null) {
+      result
+        ..add('views')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.likes;
+    if (value != null) {
+      result
+        ..add('likes')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.title;
     if (value != null) {
       result
@@ -89,6 +101,13 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
     if (value != null) {
       result
         ..add('isAvailable')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.didLike;
+    if (value != null) {
+      result
+        ..add('didLike')
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
@@ -136,6 +155,14 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           result.updated = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'views':
+          result.views = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'likes':
+          result.likes = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'title':
           result.title = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -158,6 +185,10 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           break;
         case 'isAvailable':
           result.isAvailable = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'didLike':
+          result.didLike = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
         case 'isDeleted':
@@ -430,6 +461,10 @@ class _$ArticleModel extends ArticleModel {
   @override
   final int? updated;
   @override
+  final int? views;
+  @override
+  final int? likes;
+  @override
   final String? title;
   @override
   final String? content;
@@ -439,6 +474,8 @@ class _$ArticleModel extends ArticleModel {
   final BuiltList<String>? target;
   @override
   final bool? isAvailable;
+  @override
+  final bool? didLike;
   @override
   final bool? isDeleted;
 
@@ -451,11 +488,14 @@ class _$ArticleModel extends ArticleModel {
       this.id,
       this.created,
       this.updated,
+      this.views,
+      this.likes,
       this.title,
       this.content,
       this.links,
       this.target,
       this.isAvailable,
+      this.didLike,
       this.isDeleted})
       : super._();
 
@@ -475,11 +515,14 @@ class _$ArticleModel extends ArticleModel {
         id == other.id &&
         created == other.created &&
         updated == other.updated &&
+        views == other.views &&
+        likes == other.likes &&
         title == other.title &&
         content == other.content &&
         links == other.links &&
         target == other.target &&
         isAvailable == other.isAvailable &&
+        didLike == other.didLike &&
         isDeleted == other.isDeleted;
   }
 
@@ -491,11 +534,14 @@ class _$ArticleModel extends ArticleModel {
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, created.hashCode);
     _$hash = $jc(_$hash, updated.hashCode);
+    _$hash = $jc(_$hash, views.hashCode);
+    _$hash = $jc(_$hash, likes.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, links.hashCode);
     _$hash = $jc(_$hash, target.hashCode);
     _$hash = $jc(_$hash, isAvailable.hashCode);
+    _$hash = $jc(_$hash, didLike.hashCode);
     _$hash = $jc(_$hash, isDeleted.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -509,11 +555,14 @@ class _$ArticleModel extends ArticleModel {
           ..add('id', id)
           ..add('created', created)
           ..add('updated', updated)
+          ..add('views', views)
+          ..add('likes', likes)
           ..add('title', title)
           ..add('content', content)
           ..add('links', links)
           ..add('target', target)
           ..add('isAvailable', isAvailable)
+          ..add('didLike', didLike)
           ..add('isDeleted', isDeleted))
         .toString();
   }
@@ -544,6 +593,14 @@ class ArticleModelBuilder
   int? get updated => _$this._updated;
   set updated(int? updated) => _$this._updated = updated;
 
+  int? _views;
+  int? get views => _$this._views;
+  set views(int? views) => _$this._views = views;
+
+  int? _likes;
+  int? get likes => _$this._likes;
+  set likes(int? likes) => _$this._likes = likes;
+
   String? _title;
   String? get title => _$this._title;
   set title(String? title) => _$this._title = title;
@@ -565,6 +622,10 @@ class ArticleModelBuilder
   bool? get isAvailable => _$this._isAvailable;
   set isAvailable(bool? isAvailable) => _$this._isAvailable = isAvailable;
 
+  bool? _didLike;
+  bool? get didLike => _$this._didLike;
+  set didLike(bool? didLike) => _$this._didLike = didLike;
+
   bool? _isDeleted;
   bool? get isDeleted => _$this._isDeleted;
   set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
@@ -579,11 +640,14 @@ class ArticleModelBuilder
       _id = $v.id;
       _created = $v.created;
       _updated = $v.updated;
+      _views = $v.views;
+      _likes = $v.likes;
       _title = $v.title;
       _content = $v.content;
       _links = $v.links?.toBuilder();
       _target = $v.target?.toBuilder();
       _isAvailable = $v.isAvailable;
+      _didLike = $v.didLike;
       _isDeleted = $v.isDeleted;
       _$v = null;
     }
@@ -614,11 +678,14 @@ class ArticleModelBuilder
               id: id,
               created: created,
               updated: updated,
+              views: views,
+              likes: likes,
               title: title,
               content: content,
               links: _links?.build(),
               target: _target?.build(),
               isAvailable: isAvailable,
+              didLike: didLike,
               isDeleted: isDeleted);
     } catch (_) {
       late String _$failedField;

@@ -110,6 +110,10 @@ abstract class ArticleModel
   int? get created;
   @BuiltValueField(wireName: 'updated')
   int? get updated;
+  @BuiltValueField(wireName: 'views')
+  int? get views;
+  @BuiltValueField(wireName: 'likes')
+  int? get likes;
   @BuiltValueField(wireName: 'title')
   String? get title;
   @BuiltValueField(wireName: 'content')
@@ -120,6 +124,8 @@ abstract class ArticleModel
   BuiltList<String>? get target;
   @BuiltValueField(wireName: 'isAvailable')
   bool? get isAvailable;
+  @BuiltValueField(wireName: 'didLike')
+  bool? get didLike;
   @BuiltValueField(wireName: 'isDeleted')
   bool? get isDeleted;
   String toJson() {
