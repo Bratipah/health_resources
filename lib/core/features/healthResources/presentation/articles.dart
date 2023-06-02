@@ -111,8 +111,8 @@ class _ArticlesState extends State<Articles> {
                               height: 10,
                             ),
                             Text(
-                              "Press Release".toUpperCase(),
-                              // resourcename.toUpperCase(),
+                              // "Press Release".toUpperCase(),
+                              title ?? "".toUpperCase(),
                               style: TextStyle(
                                 color: Colors.blue[800],
                                 fontSize: 18,
