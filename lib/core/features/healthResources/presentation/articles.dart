@@ -6,6 +6,7 @@ import 'widgets/articlesDetails.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_states.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_events.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';
+import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 
 class Articles extends StatefulWidget {
   const Articles({Key? key}) : super(key: key);
@@ -15,19 +16,10 @@ class Articles extends StatefulWidget {
 }
 
 class _ArticlesState extends State<Articles> {
-  String? title;
-  String? content;
-  List<String>? links;
-  bool? isAvailable = true;
-  int? created;
-  int? updated;
-  int? views;
-  int? likes;
-  bool? isDeleted = false;
-  late List<dynamic> articles;
-  bool _isLoading = false;
-
   late ArticleBloc _ArticleBloc;
+  // final List<ArticleModel> articles = [];
+   List<dynamic> articles = [];
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -39,6 +31,9 @@ class _ArticlesState extends State<Articles> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint(article.title);
+    // debugPrint(views.toString());
+    // debugPrint(likes.toString());
     return BlocListener<ArticleBloc, ArticleState>(
       listener: (context, state) {
         setState(() {
@@ -50,6 +45,11 @@ class _ArticlesState extends State<Articles> {
               content: Text(state.errorMessage),
             ),
           );
+        }
+        if (state is LoadedState) {
+          setState(() {
+            articles = state.articles;
+          });
         }
       },
       child: Scaffold(
@@ -85,100 +85,101 @@ class _ArticlesState extends State<Articles> {
             : Container(
                 padding: EdgeInsets.all(10),
                 child: GestureDetector(
-                    onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RepositoryProvider(
-                                    create: (context) => ArticleRepository(),
-                                    child: ArticlesDetails(),
-                                  )),
-                        ),
-                    child: ListView.builder(
-                        itemCount: 8,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => RepositoryProvider(
+                              create: (context) => ArticleRepository(),
+                              child: ArticlesDetails(),
+                            )),
+                  ),
+                  child: ListView.builder(
+                      itemCount: articles.length,
+                      itemBuilder: (context, index) {
+                        final article = articles[index];
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.asset(
+                                "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              // "Press Release".toUpperCase(),
+                              article.title ?? "No title",
+                              style: TextStyle(
+                                color: Colors.blue[800],
+                                fontSize: 18,
+                                // fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
+                              article.content ?? "",
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Colors.black54,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Spacer(),
+                                IconButton(
+                                  icon: Icon(Icons.remove_red_eye_sharp,
+                                      color: Colors.black26),
+                                  onPressed: () {
+                                    final snackBar = SnackBar(
+                                      content: Text("Views"),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                // "Press Release".toUpperCase(),
-                                title ?? "No title",
-                                style: TextStyle(
-                                  color: Colors.blue[800],
-                                  fontSize: 18,
-                                  // fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
-                                content ?? "",
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Spacer(),
-                                  IconButton(
-                                    icon: Icon(Icons.remove_red_eye_sharp,
-                                        color: Colors.black26),
-                                    onPressed: () {
-                                      final snackBar = SnackBar(
-                                        content: Text("Views"),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    },
+                                Text(
+                                    // "1265",
+                                    article.views.toString(),
+                                    // views,
+                                    style: TextStyle(color: Colors.blue[900])),
+                                IconButton(
+                                  // didLike ?
+                                  icon: Icon(
+                                    Icons.favorite,
+                                    color: Colors.black26,
+                                    // didLike ? color: Colors.black26 : color:Colors.blue[900],
                                   ),
-                                  Text(
-                                      // "1265",
-                                      views.toString(),
-                                      // views,
-                                      style:
-                                          TextStyle(color: Colors.blue[900])),
-                                  IconButton(
-                                    // didLike ?
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      color: Colors.black26,
-                                      // didLike ? color: Colors.black26 : color:Colors.blue[900],
-                                    ),
-                                    onPressed: () {
-                                      final snackBar = SnackBar(
-                                        content: Text("Likes"),
-                                      );
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(snackBar);
-                                    },
-                                  ),
-                                  Text(
-                                    // "4",
-                                    likes.toString(),
-                                    // likes,
-                                    style: TextStyle(color: Colors.blue[900]),
-                                  )
-                                ],
-                              ),
-                              Divider(thickness: 1),
-                            ],
-                          );
-                        }))),
+                                  onPressed: () {
+                                    final snackBar = SnackBar(
+                                      content: Text("Likes"),
+                                    );
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                  },
+                                ),
+                                Text(
+                                  // "4",
+                                  article.likes.toString(),
+                                  // likes,
+                                  style: TextStyle(color: Colors.blue[900]),
+                                )
+                              ],
+                            ),
+                            Divider(thickness: 1),
+                          ],
+                        );
+                      }),
+                ),
+              ),
       ),
 
       // return Container();
