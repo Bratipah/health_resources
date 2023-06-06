@@ -44,7 +44,9 @@ class _ArticlesState extends State<Articles> {
         }
         if (state is LoadedState) {
           setState(() {
-           final articles = state.articles;
+            LoadedState(
+                articles: state.articles
+            );
           });
         }
       },

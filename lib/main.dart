@@ -37,8 +37,6 @@ class MyApp extends StatelessWidget {
             ],
           child: Builder(builder: (context) {
             return Articles();
-              // Text("ARticles");
-              // Articles();
           }
           ),
         ) ,
