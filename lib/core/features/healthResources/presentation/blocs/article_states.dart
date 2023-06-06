@@ -4,7 +4,10 @@ import 'package:health_resources/core/features/healthResources/domain/models/art
 
 @immutable
 abstract class  ArticleState  {}
-  class EmptyState extends ArticleState {}
+  class EmptyState extends ArticleState {
+    @override
+    List<Object?> get props => [];
+  }
 
   class LoadingState extends ArticleState {
     @override
@@ -16,10 +19,9 @@ abstract class  ArticleState  {}
 
     LoadedState({required this.articles});
 
-    @override
-    List<Object?> get props => [articles];
+    // @override
+    // List<Object?> get props => [articles];
   }
-
   class ErrorState extends ArticleState {
     final String errorMessage;
     // errorMessage ="Failed";
