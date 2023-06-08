@@ -9,10 +9,11 @@ class ArticleBloc extends Bloc<ArticleEvent, ArticleState> {
 
   ArticleBloc(this._articleRepository) : super(EmptyState()) {
     on<FetchArticleEvent>((event, emit) async {
+      emit(LoadingState());
       try {
-        final List<ArticleModel> articles =
+        final articles =
             await _articleRepository.fetchArticles();
-        emit(LoadedState(articles: articles));
+        emit(LoadedState(articles));
       } catch (e) {
         emit(ErrorState(errorMessage: e.toString()));
       }

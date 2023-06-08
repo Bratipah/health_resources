@@ -19,7 +19,9 @@ class _ArticlesState extends State<Articles> {
   late ArticleBloc _ArticleBloc;
 
   bool _isLoading = false;
-  late List<ArticleModel> articles = [];
+  bool _isLoaded = false;
+  // late List<ArticleModel> articles = [];
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +37,9 @@ class _ArticlesState extends State<Articles> {
         setState(() {
           _isLoading = state is LoadingState;
         });
+        // setState(() {
+        //   _isLoaded = state is LoadedState;
+        // });
         if (state is ErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -42,148 +47,150 @@ class _ArticlesState extends State<Articles> {
             ),
           );
         }
-        if (state is LoadedState) {
+        if (state is LoadingState) {
           setState(() {
-            LoadedState(
-                articles: state.articles
-            );
+            articles = LoadedState.article
           });
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              tooltip: 'Back',
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    backgroundColor: Colors.lightBlue,
+                    content: Text(
+                      "Return to previous page",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    )));
+              },
             ),
-            tooltip: 'Back',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  backgroundColor: Colors.lightBlue,
-                  content: Text(
-                    "Return to previous page",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  )));
-            },
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            title: const Text(
+              "Health Resources",
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+            ),
           ),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: const Text(
-            "Health Resources",
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-          ),
-        ),
-        body: _isLoading
-            ? Center(child: CircularProgressIndicator(),)
-            : Container(
-                padding: EdgeInsets.all(10),
-                child: GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => RepositoryProvider(
-                              create: (context) => ArticleRepository(),
-                              child: ArticlesDetails(),
-                            )),
-                  ),
-                  child: ListView.builder(
-                      itemCount: articles.length,
-                      itemBuilder: (context, index) {
-                        final article = articles[index];
-                        debugPrint(article.likes.toString());
-                        return Text(article.title?? "");
-                        //   Column(
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   children: [
-                        //     ClipRRect(
-                        //       borderRadius: BorderRadius.circular(8.0),
-                        //       child: Image.asset(
-                        //         "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
-                        //       ),
-                        //     ),
-                        //     SizedBox(
-                        //       height: 10,
-                        //     ),
-                        //     Text(
-                        //       // "Press Release".toUpperCase(),
-                        //       article.title ?? "No title",
-                        //       style: TextStyle(
-                        //         color: Colors.blue[800],
-                        //         fontSize: 18,
-                        //         // fontWeight: FontWeight.bold
-                        //       ),
-                        //     ),
-                        //     SizedBox(
-                        //       height: 10,
-                        //     ),
-                        //     Text(
-                        //       // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
-                        //       article.content ?? "",
-                        //       maxLines: 3,
-                        //       overflow: TextOverflow.ellipsis,
-                        //       style: TextStyle(
-                        //         color: Colors.black54,
-                        //       ),
-                        //     ),
-                        //     Row(
-                        //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //       children: [
-                        //         Spacer(),
-                        //         IconButton(
-                        //           icon: Icon(Icons.remove_red_eye_sharp,
-                        //               color: Colors.black26),
-                        //           onPressed: () {
-                        //             final snackBar = SnackBar(
-                        //               content: Text("Views"),
-                        //             );
-                        //             ScaffoldMessenger.of(context)
-                        //                 .showSnackBar(snackBar);
-                        //           },
-                        //         ),
-                        //         Text(
-                        //             // "1265",
-                        //             article.views.toString(),
-                        //             // views,
-                        //             style: TextStyle(color: Colors.blue[900])),
-                        //         IconButton(
-                        //           // didLike ?
-                        //           icon: Icon(
-                        //             Icons.favorite,
-                        //             color: Colors.black26,
-                        //             // didLike ? color: Colors.black26 : color:Colors.blue[900],
-                        //           ),
-                        //           onPressed: () {
-                        //             final snackBar = SnackBar(
-                        //               content: Text("Likes"),
-                        //             );
-                        //             ScaffoldMessenger.of(context)
-                        //                 .showSnackBar(snackBar);
-                        //           },
-                        //         ),
-                        //         Text(
-                        //           // "4",
-                        //           article.likes.toString(),
-                        //           // likes,
-                        //           style: TextStyle(color: Colors.blue[900]),
-                        //         )
-                        //       ],
-                        //     ),
-                        //     Divider(thickness: 1),
-                        //   ],
-                        // );
-                      }),
-                ),
-              )
-              // : Center( child: Text('No articles available'),)
-      ),
-
-      // return Container();
+          body: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : state is LoadedState
+                  ? Container(
+                      padding: EdgeInsets.all(10),
+                      child: GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => RepositoryProvider(
+                                    create: (context) => ArticleRepository(),
+                                    child: ArticlesDetails(),
+                                  )),
+                        ),
+                        child: Text(state.articles.title),
+                        // ListView.builder(
+                        //     itemCount: articles.length,
+                        //     itemBuilder: (context, index) {
+                        //       final article = articles[index];
+                        //       debugPrint(article.likes.toString());
+                        //       return Text(article.title ?? "");
+                        //       //   Column(
+                        //       //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //       //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //       //   children: [
+                        //       //     ClipRRect(
+                        //       //       borderRadius: BorderRadius.circular(8.0),
+                        //       //       child: Image.asset(
+                        //       //         "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
+                        //       //       ),
+                        //       //     ),
+                        //       //     SizedBox(
+                        //       //       height: 10,
+                        //       //     ),
+                        //       //     Text(
+                        //       //       // "Press Release".toUpperCase(),
+                        //       //       article.title ?? "No title",
+                        //       //       style: TextStyle(
+                        //       //         color: Colors.blue[800],
+                        //       //         fontSize: 18,
+                        //       //         // fontWeight: FontWeight.bold
+                        //       //       ),
+                        //       //     ),
+                        //       //     SizedBox(
+                        //       //       height: 10,
+                        //       //     ),
+                        //       //     Text(
+                        //       //       // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
+                        //       //       article.content ?? "",
+                        //       //       maxLines: 3,
+                        //       //       overflow: TextOverflow.ellipsis,
+                        //       //       style: TextStyle(
+                        //       //         color: Colors.black54,
+                        //       //       ),
+                        //       //     ),
+                        //       //     Row(
+                        //       //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //       //       children: [
+                        //       //         Spacer(),
+                        //       //         IconButton(
+                        //       //           icon: Icon(Icons.remove_red_eye_sharp,
+                        //       //               color: Colors.black26),
+                        //       //           onPressed: () {
+                        //       //             final snackBar = SnackBar(
+                        //       //               content: Text("Views"),
+                        //       //             );
+                        //       //             ScaffoldMessenger.of(context)
+                        //       //                 .showSnackBar(snackBar);
+                        //       //           },
+                        //       //         ),
+                        //       //         Text(
+                        //       //             // "1265",
+                        //       //             article.views.toString(),
+                        //       //             // views,
+                        //       //             style: TextStyle(color: Colors.blue[900])),
+                        //       //         IconButton(
+                        //       //           // didLike ?
+                        //       //           icon: Icon(
+                        //       //             Icons.favorite,
+                        //       //             color: Colors.black26,
+                        //       //             // didLike ? color: Colors.black26 : color:Colors.blue[900],
+                        //       //           ),
+                        //       //           onPressed: () {
+                        //       //             final snackBar = SnackBar(
+                        //       //               content: Text("Likes"),
+                        //       //             );
+                        //       //             ScaffoldMessenger.of(context)
+                        //       //                 .showSnackBar(snackBar);
+                        //       //           },
+                        //       //         ),
+                        //       //         Text(
+                        //       //           // "4",
+                        //       //           article.likes.toString(),
+                        //       //           // likes,
+                        //       //           style: TextStyle(color: Colors.blue[900]),
+                        //       //         )
+                        //       //       ],
+                        //       //     ),
+                        //       //     Divider(thickness: 1),
+                        //       //   ],
+                        //       // );
+                        //     }),
+                      ),
+                    )
+                  : Center(
+                      child: Text('No articles available'),
+                    )), // return Container();
     );
   }
 }

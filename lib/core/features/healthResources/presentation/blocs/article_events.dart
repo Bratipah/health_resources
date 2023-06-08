@@ -6,7 +6,6 @@ import 'package:health_resources/core/features/healthResources/domain/repository
 abstract class ArticleEvent {}
 
 class FetchArticleEvent extends ArticleEvent {
-  late ArticleRepository _articleRepository;
   @override
   List<Object?> get props => [];
 }

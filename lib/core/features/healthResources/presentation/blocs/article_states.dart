@@ -17,10 +17,10 @@ abstract class  ArticleState  {}
   class LoadedState extends ArticleState {
     final List<ArticleModel> articles;
 
-    LoadedState({required this.articles});
+    LoadedState(this.articles);
 
-    // @override
-    // List<Object?> get props => [articles];
+    @override
+    List<Object?> get props => [articles];
   }
   class ErrorState extends ArticleState {
     final String errorMessage;
