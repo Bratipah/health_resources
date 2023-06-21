@@ -97,126 +97,137 @@ part 'article_model.g.dart';
 
 abstract class ArticleModel
     implements Built<ArticleModel, ArticleModelBuilder> {
+  int? get id;
+  int? get created;
+  int? get updated;
+  int? get views;
+  int? get likes;
+  String? get title;
+  String? get content;
+  BuiltList<String>? get links;
+  BuiltList<Media>? get media;
+  BuiltList<String>? get target;
+  bool? get isAvailable;
+  bool? get didLike;
+  bool? get isDeleted;
+
   ArticleModel._();
 
-  factory ArticleModel([void Function(ArticleModelBuilder)updates]) = _$ArticleModel;
-  @BuiltValueField(wireName: 'media')
-  BuiltList<Media>? get media;
-  @BuiltValueField(wireName: 'createdBy')
-  CreatedBy? get createdBy;
-  @BuiltValueField(wireName: 'id')
-  int? get id;
-  @BuiltValueField(wireName: 'created')
-  int? get created;
-  @BuiltValueField(wireName: 'updated')
-  int? get updated;
-  @BuiltValueField(wireName: 'views')
-  int? get views;
-  @BuiltValueField(wireName: 'likes')
-  int? get likes;
-  @BuiltValueField(wireName: 'title')
-  String? get title;
-  @BuiltValueField(wireName: 'content')
-  String? get content;
-  @BuiltValueField(wireName: 'links')
-  BuiltList<String>? get links;
-  @BuiltValueField(wireName: 'target')
-  BuiltList<String>? get target;
-  @BuiltValueField(wireName: 'isAvailable')
-  bool? get isAvailable;
-  @BuiltValueField(wireName: 'didLike')
-  bool? get didLike;
-  @BuiltValueField(wireName: 'isDeleted')
-  bool? get isDeleted;
+  factory ArticleModel(
+      [void Function(ArticleModelBuilder) updates]) =
+  _$ArticleModel;
+
+  static Serializer<ArticleModel> get serializer =>
+      _$articleModelSerializer;
+
   String toJson() {
-    return json
-        .encode(serializers.serializeWith(ArticleModel.serializer, this));
+    return json.encode(
+        serializers.serializeWith(ArticleModel.serializer, this));
   }
 
-  static ArticleModel fromJson(String jsonString) {
-    final articleModel = serializers.deserializeWith(
-      ArticleModel.serializer,
-      json.decode(jsonString),
-    );
-
-    if (articleModel != null) {
-      return articleModel;
-    } else {
-      // Handle the case when articleModel is null
-      throw Exception('Failed to deserialize ArticleModel');
-    }
+  static ArticleModel? fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(
+        ArticleModel.serializer, jsonString);
   }
+  static BuiltList<ArticleModel> listFromJson(dynamic value) =>
+      BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
 
-  static Serializer<ArticleModel> get serializer => _$articleModelSerializer;
+  static void _initializeBuilder(ArticleModelBuilder builder) => builder
+    ..created = null
+    ..likes = null
+    ..views = null
+    ..title = null
+    ..links = null
+    ..id = null
+    ..isDeleted = null
+    ..target = null
+    ..isAvailable = null
+    ..didLike = null
+    ..updated = null;
 }
 
 
 abstract class Media implements Built<Media, MediaBuilder> {
+
+  String? get name;
+  String? get systemName;
+  String? get type;
+  String? get path;
+  int? get size;
+  bool? get isDeleted;
+  int? get id;
+  int? get created;
+  int? get updated;
+
   Media._();
 
-  factory Media([updates(MediaBuilder b)]) = _$Media;
+  factory Media([void Function(MediaBuilder) updates]) = _$Media;
 
-  @BuiltValueField(wireName: 'name')
-  String? get name;
-  @BuiltValueField(wireName: 'systemName')
-  String? get systemName;
-  @BuiltValueField(wireName: 'type')
-  String? get type;
-  @BuiltValueField(wireName: 'path')
-  String? get path;
-  @BuiltValueField(wireName: 'size')
-  int? get size;
-  @BuiltValueField(wireName: 'isDeleted')
-  bool? get isDeleted;
-  @BuiltValueField(wireName: 'id')
-  int? get id;
-  @BuiltValueField(wireName: 'created')
-  int? get created;
-  @BuiltValueField(wireName: 'updated')
-  int? get updated;
+  static Serializer<Media> get serializer =>
+      _$mediaSerializer;
+
   String toJson() {
-    return json.encode(serializers.serializeWith(Media.serializer, this));
+    return json
+        .encode(serializers.serializeWith(Media.serializer, this));
+
   }
 
-  static Media? fromJson(String jsonString) {
+  static Media? fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(
-        Media.serializer, json.decode(jsonString));
+        Media.serializer, jsonString);
   }
+  static BuiltList<Media> listFromJson(dynamic value) =>
+      BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
 
-  static Serializer<Media> get serializer => _$mediaSerializer;
+  static void _initializeBuilder(MediaBuilder builder) => builder
+    ..type = null
+    ..created = null
+    ..path = null
+    ..size = null
+    ..id = null
+    ..isDeleted = null
+    ..name = null
+    ..systemName = null
+    ..updated = null;
 }
 
 abstract class CreatedBy implements Built<CreatedBy, CreatedByBuilder> {
+  String? get arcode;
+  bool? get enabled;
+  String? get firstName;
+  String? get lastName;
+  String? get otherNames;
+  int? get id;
+  int? get created;
+  int? get updated;
+
   CreatedBy._();
 
-  factory CreatedBy([updates(CreatedByBuilder b)]) = _$CreatedBy;
+  factory CreatedBy([void Function(CreatedByBuilder) updates]) = _$CreatedBy;
 
-  @BuiltValueField(wireName: 'arcode')
-  String? get arcode;
-  @BuiltValueField(wireName: 'enabled')
-  bool? get enabled;
-  @BuiltValueField(wireName: 'firstName')
-  String? get firstName;
-  @BuiltValueField(wireName: 'lastName')
-  String? get lastName;
-  @BuiltValueField(wireName: 'otherNames')
-  BuiltList<String>? get otherNames;
-  @BuiltValueField(wireName: 'id')
-  int? get id;
-  @BuiltValueField(wireName: 'created')
-  int? get created;
-  @BuiltValueField(wireName: 'updated')
-  int? get updated;
+  static Serializer<CreatedBy> get serializer => _$createdBySerializer;
+
   String toJson() {
     return json.encode(serializers.serializeWith(CreatedBy.serializer, this));
   }
 
-  static CreatedBy? fromJson(String jsonString) {
+  static CreatedBy? fromJson(Map<String, dynamic> jsonString) {
     return serializers.deserializeWith(
-        CreatedBy.serializer, json.decode(jsonString));
+        CreatedBy.serializer, jsonString);
   }
 
-  static Serializer<CreatedBy> get serializer => _$createdBySerializer;
+  static BuiltList<CreatedBy> listFromJson(dynamic value) =>
+      BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
+
+  static void _initializeBuilder(CreatedByBuilder builder) => builder
+    ..arcode = null
+    ..enabled = null
+    ..created = null
+    ..firstName = null
+    ..lastName = null
+    ..id = null
+    ..otherNames = null
+    ..updated = null;
 }
 
 

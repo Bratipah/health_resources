@@ -22,21 +22,6 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[];
     Object? value;
-    value = object.media;
-    if (value != null) {
-      result
-        ..add('media')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(Media)])));
-    }
-    value = object.createdBy;
-    if (value != null) {
-      result
-        ..add('createdBy')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(CreatedBy)));
-    }
     value = object.id;
     if (value != null) {
       result
@@ -89,6 +74,14 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(String)])));
     }
+    value = object.media;
+    if (value != null) {
+      result
+        ..add('media')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(Media)])));
+    }
     value = object.target;
     if (value != null) {
       result
@@ -133,16 +126,6 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'media':
-          result.media.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(Media)]))!
-              as BuiltList<Object?>);
-          break;
-        case 'createdBy':
-          result.createdBy.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CreatedBy))! as CreatedBy);
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
@@ -175,6 +158,12 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           result.links.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'media':
+          result.media.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(Media)]))!
               as BuiltList<Object?>);
           break;
         case 'target':
@@ -373,8 +362,7 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
       result
         ..add('otherNames')
         ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(String)])));
+            specifiedType: const FullType(String)));
     }
     value = object.id;
     if (value != null) {
@@ -425,10 +413,8 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
               specifiedType: const FullType(String)) as String?;
           break;
         case 'otherNames':
-          result.otherNames.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(String)]))!
-              as BuiltList<Object?>);
+          result.otherNames = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
@@ -451,10 +437,6 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
 
 class _$ArticleModel extends ArticleModel {
   @override
-  final BuiltList<Media>? media;
-  @override
-  final CreatedBy? createdBy;
-  @override
   final int? id;
   @override
   final int? created;
@@ -471,6 +453,8 @@ class _$ArticleModel extends ArticleModel {
   @override
   final BuiltList<String>? links;
   @override
+  final BuiltList<Media>? media;
+  @override
   final BuiltList<String>? target;
   @override
   final bool? isAvailable;
@@ -483,9 +467,7 @@ class _$ArticleModel extends ArticleModel {
       (new ArticleModelBuilder()..update(updates))._build();
 
   _$ArticleModel._(
-      {this.media,
-      this.createdBy,
-      this.id,
+      {this.id,
       this.created,
       this.updated,
       this.views,
@@ -493,6 +475,7 @@ class _$ArticleModel extends ArticleModel {
       this.title,
       this.content,
       this.links,
+      this.media,
       this.target,
       this.isAvailable,
       this.didLike,
@@ -510,8 +493,6 @@ class _$ArticleModel extends ArticleModel {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is ArticleModel &&
-        media == other.media &&
-        createdBy == other.createdBy &&
         id == other.id &&
         created == other.created &&
         updated == other.updated &&
@@ -520,6 +501,7 @@ class _$ArticleModel extends ArticleModel {
         title == other.title &&
         content == other.content &&
         links == other.links &&
+        media == other.media &&
         target == other.target &&
         isAvailable == other.isAvailable &&
         didLike == other.didLike &&
@@ -529,8 +511,6 @@ class _$ArticleModel extends ArticleModel {
   @override
   int get hashCode {
     var _$hash = 0;
-    _$hash = $jc(_$hash, media.hashCode);
-    _$hash = $jc(_$hash, createdBy.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, created.hashCode);
     _$hash = $jc(_$hash, updated.hashCode);
@@ -539,6 +519,7 @@ class _$ArticleModel extends ArticleModel {
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, links.hashCode);
+    _$hash = $jc(_$hash, media.hashCode);
     _$hash = $jc(_$hash, target.hashCode);
     _$hash = $jc(_$hash, isAvailable.hashCode);
     _$hash = $jc(_$hash, didLike.hashCode);
@@ -550,8 +531,6 @@ class _$ArticleModel extends ArticleModel {
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'ArticleModel')
-          ..add('media', media)
-          ..add('createdBy', createdBy)
           ..add('id', id)
           ..add('created', created)
           ..add('updated', updated)
@@ -560,6 +539,7 @@ class _$ArticleModel extends ArticleModel {
           ..add('title', title)
           ..add('content', content)
           ..add('links', links)
+          ..add('media', media)
           ..add('target', target)
           ..add('isAvailable', isAvailable)
           ..add('didLike', didLike)
@@ -571,15 +551,6 @@ class _$ArticleModel extends ArticleModel {
 class ArticleModelBuilder
     implements Builder<ArticleModel, ArticleModelBuilder> {
   _$ArticleModel? _$v;
-
-  ListBuilder<Media>? _media;
-  ListBuilder<Media> get media => _$this._media ??= new ListBuilder<Media>();
-  set media(ListBuilder<Media>? media) => _$this._media = media;
-
-  CreatedByBuilder? _createdBy;
-  CreatedByBuilder get createdBy =>
-      _$this._createdBy ??= new CreatedByBuilder();
-  set createdBy(CreatedByBuilder? createdBy) => _$this._createdBy = createdBy;
 
   int? _id;
   int? get id => _$this._id;
@@ -613,6 +584,10 @@ class ArticleModelBuilder
   ListBuilder<String> get links => _$this._links ??= new ListBuilder<String>();
   set links(ListBuilder<String>? links) => _$this._links = links;
 
+  ListBuilder<Media>? _media;
+  ListBuilder<Media> get media => _$this._media ??= new ListBuilder<Media>();
+  set media(ListBuilder<Media>? media) => _$this._media = media;
+
   ListBuilder<String>? _target;
   ListBuilder<String> get target =>
       _$this._target ??= new ListBuilder<String>();
@@ -630,13 +605,13 @@ class ArticleModelBuilder
   bool? get isDeleted => _$this._isDeleted;
   set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  ArticleModelBuilder();
+  ArticleModelBuilder() {
+    ArticleModel._initializeBuilder(this);
+  }
 
   ArticleModelBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _media = $v.media?.toBuilder();
-      _createdBy = $v.createdBy?.toBuilder();
       _id = $v.id;
       _created = $v.created;
       _updated = $v.updated;
@@ -645,6 +620,7 @@ class ArticleModelBuilder
       _title = $v.title;
       _content = $v.content;
       _links = $v.links?.toBuilder();
+      _media = $v.media?.toBuilder();
       _target = $v.target?.toBuilder();
       _isAvailable = $v.isAvailable;
       _didLike = $v.didLike;
@@ -673,8 +649,6 @@ class ArticleModelBuilder
     try {
       _$result = _$v ??
           new _$ArticleModel._(
-              media: _media?.build(),
-              createdBy: _createdBy?.build(),
               id: id,
               created: created,
               updated: updated,
@@ -683,6 +657,7 @@ class ArticleModelBuilder
               title: title,
               content: content,
               links: _links?.build(),
+              media: _media?.build(),
               target: _target?.build(),
               isAvailable: isAvailable,
               didLike: didLike,
@@ -690,13 +665,10 @@ class ArticleModelBuilder
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'media';
-        _media?.build();
-        _$failedField = 'createdBy';
-        _createdBy?.build();
-
         _$failedField = 'links';
         _links?.build();
+        _$failedField = 'media';
+        _media?.build();
         _$failedField = 'target';
         _target?.build();
       } catch (e) {
@@ -838,7 +810,9 @@ class MediaBuilder implements Builder<Media, MediaBuilder> {
   int? get updated => _$this._updated;
   set updated(int? updated) => _$this._updated = updated;
 
-  MediaBuilder();
+  MediaBuilder() {
+    Media._initializeBuilder(this);
+  }
 
   MediaBuilder get _$this {
     final $v = _$v;
@@ -898,7 +872,7 @@ class _$CreatedBy extends CreatedBy {
   @override
   final String? lastName;
   @override
-  final BuiltList<String>? otherNames;
+  final String? otherNames;
   @override
   final int? id;
   @override
@@ -990,11 +964,9 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   String? get lastName => _$this._lastName;
   set lastName(String? lastName) => _$this._lastName = lastName;
 
-  ListBuilder<String>? _otherNames;
-  ListBuilder<String> get otherNames =>
-      _$this._otherNames ??= new ListBuilder<String>();
-  set otherNames(ListBuilder<String>? otherNames) =>
-      _$this._otherNames = otherNames;
+  String? _otherNames;
+  String? get otherNames => _$this._otherNames;
+  set otherNames(String? otherNames) => _$this._otherNames = otherNames;
 
   int? _id;
   int? get id => _$this._id;
@@ -1008,7 +980,9 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   int? get updated => _$this._updated;
   set updated(int? updated) => _$this._updated = updated;
 
-  CreatedByBuilder();
+  CreatedByBuilder() {
+    CreatedBy._initializeBuilder(this);
+  }
 
   CreatedByBuilder get _$this {
     final $v = _$v;
@@ -1017,7 +991,7 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
       _enabled = $v.enabled;
       _firstName = $v.firstName;
       _lastName = $v.lastName;
-      _otherNames = $v.otherNames?.toBuilder();
+      _otherNames = $v.otherNames;
       _id = $v.id;
       _created = $v.created;
       _updated = $v.updated;
@@ -1041,29 +1015,16 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   CreatedBy build() => _build();
 
   _$CreatedBy _build() {
-    _$CreatedBy _$result;
-    try {
-      _$result = _$v ??
-          new _$CreatedBy._(
-              arcode: arcode,
-              enabled: enabled,
-              firstName: firstName,
-              lastName: lastName,
-              otherNames: _otherNames?.build(),
-              id: id,
-              created: created,
-              updated: updated);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'otherNames';
-        _otherNames?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'CreatedBy', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$CreatedBy._(
+            arcode: arcode,
+            enabled: enabled,
+            firstName: firstName,
+            lastName: lastName,
+            otherNames: otherNames,
+            id: id,
+            created: created,
+            updated: updated);
     replace(_$result);
     return _$result;
   }

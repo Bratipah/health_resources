@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:health_resources/core/features/healthResources/presentation/articles.dart';
+import 'package:health_resources/core/features/healthResources/presentation/widgets/articlesDetails.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';
+import 'package:health_resources/core/features/healthResources/presentation/blocs/articleDetails_blocs.dart';
 // import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
 import 'package:health_resources/core/features/inbox/presentation/widgets/chatPage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,11 +32,11 @@ class MyApp extends StatelessWidget {
         body: MultiBlocProvider(
             providers: [
               BlocProvider(
-                  create: (_) => ArticleBloc(ArticleRepository())
+                  create: (BuildContext context) => ArticleBloc(ArticleRepository())
               ),
-              // BlocProvider<CommentBloc>(
-              //     create: (_) =>CommentsBloc()
-              // ),
+              BlocProvider<ArticleDetailsBloc>(
+                  create: (BuildContext context) => ArticleDetailsBloc(ArticleRepository()),
+              ),
             ],
           child: Builder(builder: (context) {
             return Articles();

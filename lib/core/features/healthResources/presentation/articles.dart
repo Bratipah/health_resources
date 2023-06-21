@@ -6,7 +6,10 @@ import 'widgets/articlesDetails.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_states.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_events.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';
+import 'package:health_resources/core/features/healthResources/presentation/blocs/articleDetails_blocs.dart';
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
+import 'package:health_resources/utils/utils.dart';
+// import 'package:flutter_html/flutter_html.dart';
 
 class Articles extends StatefulWidget {
   const Articles({Key? key}) : super(key: key);
@@ -16,24 +19,22 @@ class Articles extends StatefulWidget {
 }
 
 class _ArticlesState extends State<Articles> {
-  late ArticleBloc _ArticleBloc;
-
   bool _isLoading = false;
-  bool _isLoaded = false;
-  late List<ArticleModel> articles = [];
+  List<ArticleModel> _articles = [];
 
   @override
   void initState() {
     super.initState();
-    _ArticleBloc = ArticleBloc(
-      ArticleRepository(),
-    )..add(FetchArticleEvent());
+    context.read<ArticleBloc>().add(FetchArticleEvent());
+    debugPrint("init state called");
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<ArticleBloc, ArticleState>(
       listener: (context, state) {
+        debugPrint("the current state is $state");
+
         setState(() {
           _isLoading = state is LoadingState;
         });
@@ -43,10 +44,12 @@ class _ArticlesState extends State<Articles> {
               content: Text(state.errorMessage),
             ),
           );
+          debugPrint("${state.errorMessage}");
         }
         if (state is LoadedState) {
+          debugPrint("the articles on the widget are $_articles");
           setState(() {
-            articles = LoadedState.article;
+            _articles = state.articles;
           });
         }
       },
@@ -84,110 +87,110 @@ class _ArticlesState extends State<Articles> {
                   child: CircularProgressIndicator(),
                 )
               : Container(
-                      padding: EdgeInsets.all(10),
-                      child: GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RepositoryProvider(
-                                    create: (context) => ArticleRepository(),
-                                    child: ArticlesDetails(),
-                                  )),
-                        ),
-                        child: ListView.builder(
-                            itemCount: articles.length,
-                            itemBuilder: (context, index) {
-                              final article = articles[index];
-                              debugPrint(article.likes.toString());
-                              return Text(article.title ?? "");
-                              //   Column(
-                              //   crossAxisAlignment: CrossAxisAlignment.start,
-                              //   // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              //   children: [
-                              //     ClipRRect(
-                              //       borderRadius: BorderRadius.circular(8.0),
-                              //       child: Image.asset(
-                              //         "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
-                              //       ),
-                              //     ),
-                              //     SizedBox(
-                              //       height: 10,
-                              //     ),
-                              //     Text(
-                              //       // "Press Release".toUpperCase(),
-                              //       article.title ?? "No title",
-                              //       style: TextStyle(
-                              //         color: Colors.blue[800],
-                              //         fontSize: 18,
-                              //         // fontWeight: FontWeight.bold
-                              //       ),
-                              //     ),
-                              //     SizedBox(
-                              //       height: 10,
-                              //     ),
-                              //     Text(
-                              //       // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
-                              //       article.content ?? "",
-                              //       maxLines: 3,
-                              //       overflow: TextOverflow.ellipsis,
-                              //       style: TextStyle(
-                              //         color: Colors.black54,
-                              //       ),
-                              //     ),
-                              //     Row(
-                              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              //       children: [
-                              //         Spacer(),
-                              //         IconButton(
-                              //           icon: Icon(Icons.remove_red_eye_sharp,
-                              //               color: Colors.black26),
-                              //           onPressed: () {
-                              //             final snackBar = SnackBar(
-                              //               content: Text("Views"),
-                              //             );
-                              //             ScaffoldMessenger.of(context)
-                              //                 .showSnackBar(snackBar);
-                              //           },
-                              //         ),
-                              //         Text(
-                              //             // "1265",
-                              //             article.views.toString(),
-                              //             // views,
-                              //             style: TextStyle(color: Colors.blue[900])),
-                              //         IconButton(
-                              //           // didLike ?
-                              //           icon: Icon(
-                              //             Icons.favorite,
-                              //             color: Colors.black26,
-                              //             // didLike ? color: Colors.black26 : color:Colors.blue[900],
-                              //           ),
-                              //           onPressed: () {
-                              //             final snackBar = SnackBar(
-                              //               content: Text("Likes"),
-                              //             );
-                              //             ScaffoldMessenger.of(context)
-                              //                 .showSnackBar(snackBar);
-                              //           },
-                              //         ),
-                              //         Text(
-                              //           // "4",
-                              //           article.likes.toString(),
-                              //           // likes,
-                              //           style: TextStyle(color: Colors.blue[900]),
-                              //         )
-                              //       ],
-                              //     ),
-                              //     Divider(thickness: 1),
-                              //   ],
-                              // );
-                            }),
+                  padding: EdgeInsets.all(10),
+                  child: GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                         builder:  (context) {
+                           return BlocProvider.value(
+                             value: BlocProvider.of<ArticleDetailsBloc>(context),
+                             child: ArticlesDetails(),
+                           );
+                         },
                       ),
-                    )
-    //               :
-    //       Center(
-    //                   child: Text('No articles available'),
-    //                 )
-    ), // return Container();
+                    ),
+                    child: ListView.builder(
+                        itemCount: _articles.length,
+                        itemBuilder: (context, index) {
+                          final article = _articles[index];
+                          // final links = article.links?.toList() ?? [];
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    "$myrekod_file_url/${article.media?.toList().firstWhere((element) => element.type == "Image").systemName ?? ""}",
+                                  )),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                // "Press Release".toUpperCase(),
+                                article.title ?? "No title".substring(0, 3),
+                                style: TextStyle(
+                                  color: Colors.blue[800],
+                                  fontSize: 18,
+                                  // fontWeight: FontWeight.bold
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              // Html(
+                              //   data: article.content ?? "" ,
+                              //   style: {
+                              //     'p': Style(
+                              //       fontSize: FontSize(18),
+                              //       maxLines: 3,
+                              //       textOverflow: TextOverflow.ellipsis,
+                              //     ),}
+                              // ),
+                              Text(
+                                // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
+                                article.content ?? "",
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Spacer(),
+                                  IconButton(
+                                    icon: Icon(Icons.remove_red_eye_sharp,
+                                        color: Colors.black26),
+                                    onPressed: () {
+                                      final snackBar = SnackBar(
+                                        content: Text("Views"),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    },
+                                  ),
+                                  Text(
+                                      // "1265",
+                                      article.views.toString(),
+                                      // views,
+                                      style:
+                                          TextStyle(color: Colors.blue[900])),
+                                  IconButton(
+                                    icon: Icon(Icons.favorite,
+                                        color: (article.didLike!)
+                                            ? Colors.black26
+                                            : Colors.blue[900]),
+                                    // highlightColor: Colors.blue[900],
+                                    onPressed: () {},
+                                  ),
+                                  Text(
+                                    // "4",
+                                    article.likes.toString(),
+                                    // likes,
+                                    style: TextStyle(color: Colors.blue[900]),
+                                  )
+                                ],
+                              ),
+                              Divider(thickness: 1),
+                            ],
+                          );
+                        }),
+                  ),
+                )),
     );
   }
 }

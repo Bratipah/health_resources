@@ -7,3 +7,7 @@ class Texts {
 
   );
 }
+
+
+String myrekod_url = "https://gateway.jollyground-bac91137.northeurope.azurecontainerapps.io";
+String myrekod_file_url = "$myrekod_url/file/download/public";

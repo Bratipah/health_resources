@@ -24,7 +24,6 @@ abstract class  ArticleState  {}
   }
   class ErrorState extends ArticleState {
     final String errorMessage;
-    // errorMessage ="Failed";
 
    ErrorState({required this.errorMessage});
   }
