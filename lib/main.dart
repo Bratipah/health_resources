@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:health_resources/core/features/healthResources/presentation/articles.dart';
+// import 'package:health_resources/core/features/healthResources/presentation/detailsTest.dart';
 import 'package:health_resources/core/features/healthResources/presentation/widgets/articlesDetails.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/articleDetails_blocs.dart';
+
 // import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
 import 'package:health_resources/core/features/inbox/presentation/widgets/chatPage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,31 +24,29 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Health Resources',
       theme: ThemeData(
-        useMaterial3: true,
+          useMaterial3: true,
           appBarTheme: AppBarTheme(
             elevation: 0, // This removes the shadow from all App Bars.
-          )
-      ),
+          )),
       home:
+      // DetailsTest(),
       Scaffold(
         body: MultiBlocProvider(
-            providers: [
-              BlocProvider(
-                  create: (BuildContext context) => ArticleBloc(ArticleRepository())
-              ),
-              BlocProvider<ArticleDetailsBloc>(
-                  create: (BuildContext context) => ArticleDetailsBloc(ArticleRepository()),
-              ),
-            ],
-          child: Builder(builder: (context) {
-            return Articles();
-          }
-          ),
-        ) ,
+          providers: [
+            BlocProvider<ArticleBloc>(
+                create: (BuildContext context) =>
+                    ArticleBloc(ArticleRepository())),
+            BlocProvider<ArticleDetailsBloc>(
+              create: (BuildContext context) =>
+                  ArticleDetailsBloc(ArticleRepository()),
+            ),
+          ],
+          child: Articles(),
+        ),
       ),
-      // ChatPage(),
-      // ArticleDetails(),
     );
+    // ChatPage(),
+    // ArticleDetails(),
+    // );
   }
 }
-

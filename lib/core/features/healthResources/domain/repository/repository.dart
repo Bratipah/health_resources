@@ -2,17 +2,17 @@ import 'dart:convert';
 
 import 'package:http/http.dart'as http;
 import 'package:flutter/material.dart';
+import 'package:health_resources/utils/utils.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 
 class ArticleRepository {
   // String endpoint = "https://staging.afyarekod.com/resource/";
-  String endpoint = "https://gateway.jollyground-bac91137.northeurope.azurecontainerapps.io/resource/";
 
       Future<List<ArticleModel>> fetchArticles() async {
       final response = await http.get(
-        Uri.parse(endpoint),
-        headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhY2Nlc3NvciI6IjQiLCJhY2Nlc3NpbmciOiIzIiwicHJvdmlkZXIiOiIyIiwiZnVuY3Rpb24iOiJCYXNpY0F1dGhlbnRpY2F0aW9uIiwic3ViIjoiQWZ5YVJla29kIFRva2VuIiwiYXVkIjoiTm9uZSBvZiB5b3VyIGJpeiB3YXggOikiLCJpc3MiOiIkMmEkMTAkcGhvYXdFVFZ0bm83UGNuQ3JENTlMdXRmVUpJeFROcDBBeUpuYXcxM0w0dk8wMzdETGNVdjIiLCJpYXQiOjE2ODczNDM4OTMsImV4cCI6MTY4NzM2MTg5M30.EIAiiBN1wFAChBuXKC5MtwzR5xVOlIqRCX5cUQ9MiTvakX9L8OYrm4lzcdJIRrWlTBvcYH_DuNlXyD0JjR0DpA"}
+        Uri.parse(myrekod_posts_url),
+        headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhY2Nlc3NvciI6IjEyMyIsImFjY2Vzc2luZyI6IjEyMiIsInByb3ZpZGVyIjoiMTIxIiwiZnVuY3Rpb24iOiJCYXNpY0F1dGhlbnRpY2F0aW9uIiwic3ViIjoiQWZ5YVJla29kIFRva2VuIiwiYXVkIjoiTm9uZSBvZiB5b3VyIGJpeiB3YXggOikiLCJpc3MiOiJBZnlhUmVrb2RAMjAyMSIsImlhdCI6MTY0NjY0OTc5MywiZXhwIjoxNjQ2NjY3NzkzfQ.B3AvZ3RD7_0VSfqVwBNuD-xoiLlpSkmXI0zV1KxjWu90FIZGadDnlJUvAbNjD4XfbKKjvBnwMouHVkqp0vC6vw"}
     );
 
 

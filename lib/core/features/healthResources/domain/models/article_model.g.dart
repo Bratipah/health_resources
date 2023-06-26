@@ -82,6 +82,14 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
             specifiedType:
                 const FullType(BuiltList, const [const FullType(Media)])));
     }
+    value = object.createdBy;
+    if (value != null) {
+      result
+        ..add('createdBy')
+        ..add(serializers.serialize(value,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(CreatedBy)])));
+    }
     value = object.target;
     if (value != null) {
       result
@@ -164,6 +172,12 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           result.media.replace(serializers.deserialize(value,
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(Media)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'createdBy':
+          result.createdBy.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(CreatedBy)]))!
               as BuiltList<Object?>);
           break;
         case 'target':
@@ -455,6 +469,8 @@ class _$ArticleModel extends ArticleModel {
   @override
   final BuiltList<Media>? media;
   @override
+  final BuiltList<CreatedBy>? createdBy;
+  @override
   final BuiltList<String>? target;
   @override
   final bool? isAvailable;
@@ -476,6 +492,7 @@ class _$ArticleModel extends ArticleModel {
       this.content,
       this.links,
       this.media,
+      this.createdBy,
       this.target,
       this.isAvailable,
       this.didLike,
@@ -502,6 +519,7 @@ class _$ArticleModel extends ArticleModel {
         content == other.content &&
         links == other.links &&
         media == other.media &&
+        createdBy == other.createdBy &&
         target == other.target &&
         isAvailable == other.isAvailable &&
         didLike == other.didLike &&
@@ -520,6 +538,7 @@ class _$ArticleModel extends ArticleModel {
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, links.hashCode);
     _$hash = $jc(_$hash, media.hashCode);
+    _$hash = $jc(_$hash, createdBy.hashCode);
     _$hash = $jc(_$hash, target.hashCode);
     _$hash = $jc(_$hash, isAvailable.hashCode);
     _$hash = $jc(_$hash, didLike.hashCode);
@@ -540,6 +559,7 @@ class _$ArticleModel extends ArticleModel {
           ..add('content', content)
           ..add('links', links)
           ..add('media', media)
+          ..add('createdBy', createdBy)
           ..add('target', target)
           ..add('isAvailable', isAvailable)
           ..add('didLike', didLike)
@@ -588,6 +608,12 @@ class ArticleModelBuilder
   ListBuilder<Media> get media => _$this._media ??= new ListBuilder<Media>();
   set media(ListBuilder<Media>? media) => _$this._media = media;
 
+  ListBuilder<CreatedBy>? _createdBy;
+  ListBuilder<CreatedBy> get createdBy =>
+      _$this._createdBy ??= new ListBuilder<CreatedBy>();
+  set createdBy(ListBuilder<CreatedBy>? createdBy) =>
+      _$this._createdBy = createdBy;
+
   ListBuilder<String>? _target;
   ListBuilder<String> get target =>
       _$this._target ??= new ListBuilder<String>();
@@ -621,6 +647,7 @@ class ArticleModelBuilder
       _content = $v.content;
       _links = $v.links?.toBuilder();
       _media = $v.media?.toBuilder();
+      _createdBy = $v.createdBy?.toBuilder();
       _target = $v.target?.toBuilder();
       _isAvailable = $v.isAvailable;
       _didLike = $v.didLike;
@@ -658,6 +685,7 @@ class ArticleModelBuilder
               content: content,
               links: _links?.build(),
               media: _media?.build(),
+              createdBy: _createdBy?.build(),
               target: _target?.build(),
               isAvailable: isAvailable,
               didLike: didLike,
@@ -669,6 +697,8 @@ class ArticleModelBuilder
         _links?.build();
         _$failedField = 'media';
         _media?.build();
+        _$failedField = 'createdBy';
+        _createdBy?.build();
         _$failedField = 'target';
         _target?.build();
       } catch (e) {

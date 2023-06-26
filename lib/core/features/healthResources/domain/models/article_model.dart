@@ -106,6 +106,7 @@ abstract class ArticleModel
   String? get content;
   BuiltList<String>? get links;
   BuiltList<Media>? get media;
+  BuiltList<CreatedBy>? get createdBy;
   BuiltList<String>? get target;
   bool? get isAvailable;
   bool? get didLike;

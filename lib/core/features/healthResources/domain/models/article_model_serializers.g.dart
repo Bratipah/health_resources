@@ -17,6 +17,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(Media)]),
           () => new ListBuilder<Media>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(CreatedBy)]),
+          () => new ListBuilder<CreatedBy>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>()))
     .build();

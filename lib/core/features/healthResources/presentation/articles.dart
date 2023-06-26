@@ -14,6 +14,8 @@ import 'package:health_resources/utils/utils.dart';
 class Articles extends StatefulWidget {
   const Articles({Key? key}) : super(key: key);
 
+  int? postId;
+
   @override
   State<Articles> createState() => _ArticlesState();
 }
@@ -92,7 +94,7 @@ class _ArticlesState extends State<Articles> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                         builder:  (context) {
+                         builder:  (_) {
                            return BlocProvider.value(
                              value: BlocProvider.of<ArticleDetailsBloc>(context),
                              child: ArticlesDetails(),
@@ -130,7 +132,8 @@ class _ArticlesState extends State<Articles> {
                                 height: 10,
                               ),
                               // Html(
-                              //   data: article.content ?? "" ,
+                              //   data: article.content!,
+                              //   onImageTap: (url, context, attributes, element) => {} ,
                               //   style: {
                               //     'p': Style(
                               //       fontSize: FontSize(18),
