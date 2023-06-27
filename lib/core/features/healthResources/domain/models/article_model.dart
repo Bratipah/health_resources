@@ -102,11 +102,13 @@ abstract class ArticleModel
   int? get updated;
   int? get views;
   int? get likes;
+  int? get comments;
   String? get title;
   String? get content;
   BuiltList<String>? get links;
   BuiltList<Media>? get media;
-  BuiltList<CreatedBy>? get createdBy;
+  @BuiltValueField(wireName: 'createdBy')
+  User? get createdBy;
   BuiltList<String>? get target;
   bool? get isAvailable;
   bool? get didLike;
@@ -137,7 +139,9 @@ abstract class ArticleModel
     ..created = null
     ..likes = null
     ..views = null
+    ..comments = null
     ..title = null
+    ..createdBy = null
     ..links = null
     ..id = null
     ..isDeleted = null
@@ -145,6 +149,7 @@ abstract class ArticleModel
     ..isAvailable = null
     ..didLike = null
     ..updated = null;
+
 }
 
 
@@ -192,43 +197,118 @@ abstract class Media implements Built<Media, MediaBuilder> {
     ..updated = null;
 }
 
-abstract class CreatedBy implements Built<CreatedBy, CreatedByBuilder> {
-  String? get arcode;
-  bool? get enabled;
-  String? get firstName;
-  String? get lastName;
-  String? get otherNames;
+// abstract class CreatedBy implements Built<CreatedBy, CreatedByBuilder> {
+//   //@BuiltValueField(wireName: "arcode")
+//   //String? get arcode;
+//   bool? get enabled;
+//   String? get firstName;
+//   String? get lastName;
+//   BuiltList<String>? get otherNames;
+//   int? get id;
+//   int? get created;
+//   int? get updated;
+//
+//   CreatedBy._();
+//
+//   factory CreatedBy([void Function(CreatedByBuilder) updates]) = _$CreatedBy;
+//
+//   static Serializer<CreatedBy> get serializer => _$createdBySerializer;
+//
+//   String toJson() {
+//     return json
+//         .encode(serializers.serializeWith(CreatedBy.serializer, this));
+//
+//   }
+//
+//   static CreatedBy? fromJson(Map<String, dynamic> jsonString) {
+//     return serializers.deserializeWith(
+//         CreatedBy.serializer, jsonString);
+//   }
+//   static BuiltList<CreatedBy> listFromJson(dynamic value) =>
+//       BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
+//
+//   static void _initializeBuilder(CreatedByBuilder builder) => builder
+//     // ..arcode = null
+//     ..enabled = null
+//     ..created = null
+//     ..firstName = null
+//     ..lastName = null
+//     ..id = null
+//     ..otherNames = null
+//     ..updated = null;
+// }
+
+abstract class User implements Built<User, UserBuilder> {
+  @BuiltValueField(wireName: 'id')
   int? get id;
+
+  @BuiltValueField(wireName: 'arcode')
+  String? get arcode;
+
+  @BuiltValueField(wireName: 'enabled')
+  bool get enabled;
+
+  @BuiltValueField(wireName: 'firstName')
+  String? get firstName;
+
+  @BuiltValueField(wireName: 'lastName')
+  String? get lastName;
+
+  @BuiltValueField(wireName: 'otherNames')
+  BuiltList<String>? get otherNames;
+
+  @BuiltValueField(wireName: 'profilePicture')
+  int? get profilePicture;
+
+  @BuiltValueField(wireName: 'country')
+  String? get country;
+
+  @BuiltValueField(wireName: 'referralCode')
+  String? get referralCode;
+
+  @BuiltValueField(wireName: 'referrer')
+  String? get referrer;
+
+  @BuiltValueField(wireName: 'bc_wallet')
+  String? get bcWallet;
+
+  @BuiltValueField(wireName: 'created')
   int? get created;
+
+  @BuiltValueField(wireName: 'updated')
   int? get updated;
 
-  CreatedBy._();
+  User._();
 
-  factory CreatedBy([void Function(CreatedByBuilder) updates]) = _$CreatedBy;
+  factory User([updates(UserBuilder b)]) = _$User;
 
-  static Serializer<CreatedBy> get serializer => _$createdBySerializer;
+  static Serializer<User> get serializer => _$userSerializer;
+
+  static void _initializeBuilder(UserBuilder builder) =>
+      builder
+        ..id = 0
+        ..arcode = null
+        ..enabled = false
+        ..firstName = null
+        ..lastName = null
+        ..otherNames = null
+        ..profilePicture = null
+        ..country = null
+        ..referralCode = null
+        ..referrer = null
+        ..bcWallet = null
+        ..created = null
+        ..updated = null;
+
+  static User? fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(
+        User.serializer, jsonString);
+  }
 
   String toJson() {
-    return json.encode(serializers.serializeWith(CreatedBy.serializer, this));
+    return json.encode(
+        serializers.serializeWith(User.serializer, this));
   }
-
-  static CreatedBy? fromJson(Map<String, dynamic> jsonString) {
-    return serializers.deserializeWith(
-        CreatedBy.serializer, jsonString);
-  }
-
-  static BuiltList<CreatedBy> listFromJson(dynamic value) =>
-      BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
-
-  static void _initializeBuilder(CreatedByBuilder builder) => builder
-    ..arcode = null
-    ..enabled = null
-    ..created = null
-    ..firstName = null
-    ..lastName = null
-    ..id = null
-    ..otherNames = null
-    ..updated = null;
 }
 
 

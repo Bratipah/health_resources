@@ -8,17 +8,17 @@ part of 'article_model_serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(ArticleModel.serializer)
-      ..add(CreatedBy.serializer)
       ..add(Media.serializer)
+      ..add(User.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(Media)]),
           () => new ListBuilder<Media>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(CreatedBy)]),
-          () => new ListBuilder<CreatedBy>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>()))

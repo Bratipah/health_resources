@@ -10,7 +10,7 @@ part 'article_model_serializers.g.dart';
 @SerializersFor([
   ArticleModel,
   Media,
-  CreatedBy,
+  User,
 ])
 
 final Serializers serializers = (_$serializers.toBuilder()

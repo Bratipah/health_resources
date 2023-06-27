@@ -12,7 +12,7 @@ class ArticleRepository {
       Future<List<ArticleModel>> fetchArticles() async {
       final response = await http.get(
         Uri.parse(myrekod_posts_url),
-        headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhY2Nlc3NvciI6IjEyMyIsImFjY2Vzc2luZyI6IjEyMiIsInByb3ZpZGVyIjoiMTIxIiwiZnVuY3Rpb24iOiJCYXNpY0F1dGhlbnRpY2F0aW9uIiwic3ViIjoiQWZ5YVJla29kIFRva2VuIiwiYXVkIjoiTm9uZSBvZiB5b3VyIGJpeiB3YXggOikiLCJpc3MiOiJBZnlhUmVrb2RAMjAyMSIsImlhdCI6MTY0NjY0OTc5MywiZXhwIjoxNjQ2NjY3NzkzfQ.B3AvZ3RD7_0VSfqVwBNuD-xoiLlpSkmXI0zV1KxjWu90FIZGadDnlJUvAbNjD4XfbKKjvBnwMouHVkqp0vC6vw"}
+        headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhY2Nlc3NvciI6IjQiLCJhY2Nlc3NpbmciOiIzIiwicHJvdmlkZXIiOiIyIiwiZnVuY3Rpb24iOiJCYXNpY0F1dGhlbnRpY2F0aW9uIiwic3ViIjoiQWZ5YVJla29kIFRva2VuIiwiYXVkIjoiTm9uZSBvZiB5b3VyIGJpeiB3YXggOikiLCJpc3MiOiIkMmEkMTAkeUJaWGE1VG04U00zb1RJQnd1cXZCT2Y4UVlQNG0vek9ENFZydzlnekg4THlhaXhidDNRYlciLCJpYXQiOjE2ODc4NTAzNjQsImV4cCI6MTY4Nzg2ODM2NH0.8nSLizGpbKg4rvU79Gu64h92H06AZVDO-SevhbgYNVSI7c2j5g5K3KNJTejz6IXAu34ImTNkY58YwCr-PE8OlA"}
     );
 
 

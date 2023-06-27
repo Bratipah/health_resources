@@ -12,7 +12,7 @@ import 'package:health_resources/utils/utils.dart';
 // import 'package:flutter_html/flutter_html.dart';
 
 class Articles extends StatefulWidget {
-  const Articles({Key? key}) : super(key: key);
+  Articles({Key? key}) : super(key: key);
 
   int? postId;
 

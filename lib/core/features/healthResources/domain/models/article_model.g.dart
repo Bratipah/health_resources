@@ -9,7 +9,7 @@ part of 'article_model.dart';
 Serializer<ArticleModel> _$articleModelSerializer =
     new _$ArticleModelSerializer();
 Serializer<Media> _$mediaSerializer = new _$MediaSerializer();
-Serializer<CreatedBy> _$createdBySerializer = new _$CreatedBySerializer();
+Serializer<User> _$userSerializer = new _$UserSerializer();
 
 class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
   @override
@@ -52,6 +52,12 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
         ..add('likes')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.comments;
+    if (value != null) {
+      result
+        ..add('comments')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.title;
     if (value != null) {
       result
@@ -86,9 +92,8 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
     if (value != null) {
       result
         ..add('createdBy')
-        ..add(serializers.serialize(value,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(CreatedBy)])));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(User)));
     }
     value = object.target;
     if (value != null) {
@@ -154,6 +159,10 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           result.likes = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'comments':
+          result.comments = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'title':
           result.title = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -176,9 +185,7 @@ class _$ArticleModelSerializer implements StructuredSerializer<ArticleModel> {
           break;
         case 'createdBy':
           result.createdBy.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(CreatedBy)]))!
-              as BuiltList<Object?>);
+              specifiedType: const FullType(User))! as User);
           break;
         case 'target':
           result.target.replace(serializers.deserialize(value,
@@ -332,30 +339,33 @@ class _$MediaSerializer implements StructuredSerializer<Media> {
   }
 }
 
-class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
+class _$UserSerializer implements StructuredSerializer<User> {
   @override
-  final Iterable<Type> types = const [CreatedBy, _$CreatedBy];
+  final Iterable<Type> types = const [User, _$User];
   @override
-  final String wireName = 'CreatedBy';
+  final String wireName = 'User';
 
   @override
-  Iterable<Object?> serialize(Serializers serializers, CreatedBy object,
+  Iterable<Object?> serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[];
+    final result = <Object?>[
+      'enabled',
+      serializers.serialize(object.enabled,
+          specifiedType: const FullType(bool)),
+    ];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.arcode;
     if (value != null) {
       result
         ..add('arcode')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
-    }
-    value = object.enabled;
-    if (value != null) {
-      result
-        ..add('enabled')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
     value = object.firstName;
     if (value != null) {
@@ -376,13 +386,42 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
       result
         ..add('otherNames')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
     }
-    value = object.id;
+    value = object.profilePicture;
     if (value != null) {
       result
-        ..add('id')
+        ..add('profilePicture')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.country;
+    if (value != null) {
+      result
+        ..add('country')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.referralCode;
+    if (value != null) {
+      result
+        ..add('referralCode')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.referrer;
+    if (value != null) {
+      result
+        ..add('referrer')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.bcWallet;
+    if (value != null) {
+      result
+        ..add('bc_wallet')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     value = object.created;
     if (value != null) {
@@ -400,9 +439,9 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
   }
 
   @override
-  CreatedBy deserialize(Serializers serializers, Iterable<Object?> serialized,
+  User deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CreatedByBuilder();
+    final result = new UserBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -410,13 +449,17 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'arcode':
           result.arcode = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'enabled':
           result.enabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'firstName':
           result.firstName = serializers.deserialize(value,
@@ -427,12 +470,30 @@ class _$CreatedBySerializer implements StructuredSerializer<CreatedBy> {
               specifiedType: const FullType(String)) as String?;
           break;
         case 'otherNames':
-          result.otherNames = serializers.deserialize(value,
+          result.otherNames.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'profilePicture':
+          result.profilePicture = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'country':
+          result.country = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'id':
-          result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int?;
+        case 'referralCode':
+          result.referralCode = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'referrer':
+          result.referrer = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'bc_wallet':
+          result.bcWallet = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'created':
           result.created = serializers.deserialize(value,
@@ -461,6 +522,8 @@ class _$ArticleModel extends ArticleModel {
   @override
   final int? likes;
   @override
+  final int? comments;
+  @override
   final String? title;
   @override
   final String? content;
@@ -469,7 +532,7 @@ class _$ArticleModel extends ArticleModel {
   @override
   final BuiltList<Media>? media;
   @override
-  final BuiltList<CreatedBy>? createdBy;
+  final User? createdBy;
   @override
   final BuiltList<String>? target;
   @override
@@ -488,6 +551,7 @@ class _$ArticleModel extends ArticleModel {
       this.updated,
       this.views,
       this.likes,
+      this.comments,
       this.title,
       this.content,
       this.links,
@@ -515,6 +579,7 @@ class _$ArticleModel extends ArticleModel {
         updated == other.updated &&
         views == other.views &&
         likes == other.likes &&
+        comments == other.comments &&
         title == other.title &&
         content == other.content &&
         links == other.links &&
@@ -534,6 +599,7 @@ class _$ArticleModel extends ArticleModel {
     _$hash = $jc(_$hash, updated.hashCode);
     _$hash = $jc(_$hash, views.hashCode);
     _$hash = $jc(_$hash, likes.hashCode);
+    _$hash = $jc(_$hash, comments.hashCode);
     _$hash = $jc(_$hash, title.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, links.hashCode);
@@ -555,6 +621,7 @@ class _$ArticleModel extends ArticleModel {
           ..add('updated', updated)
           ..add('views', views)
           ..add('likes', likes)
+          ..add('comments', comments)
           ..add('title', title)
           ..add('content', content)
           ..add('links', links)
@@ -592,6 +659,10 @@ class ArticleModelBuilder
   int? get likes => _$this._likes;
   set likes(int? likes) => _$this._likes = likes;
 
+  int? _comments;
+  int? get comments => _$this._comments;
+  set comments(int? comments) => _$this._comments = comments;
+
   String? _title;
   String? get title => _$this._title;
   set title(String? title) => _$this._title = title;
@@ -608,11 +679,9 @@ class ArticleModelBuilder
   ListBuilder<Media> get media => _$this._media ??= new ListBuilder<Media>();
   set media(ListBuilder<Media>? media) => _$this._media = media;
 
-  ListBuilder<CreatedBy>? _createdBy;
-  ListBuilder<CreatedBy> get createdBy =>
-      _$this._createdBy ??= new ListBuilder<CreatedBy>();
-  set createdBy(ListBuilder<CreatedBy>? createdBy) =>
-      _$this._createdBy = createdBy;
+  UserBuilder? _createdBy;
+  UserBuilder get createdBy => _$this._createdBy ??= new UserBuilder();
+  set createdBy(UserBuilder? createdBy) => _$this._createdBy = createdBy;
 
   ListBuilder<String>? _target;
   ListBuilder<String> get target =>
@@ -643,6 +712,7 @@ class ArticleModelBuilder
       _updated = $v.updated;
       _views = $v.views;
       _likes = $v.likes;
+      _comments = $v.comments;
       _title = $v.title;
       _content = $v.content;
       _links = $v.links?.toBuilder();
@@ -681,6 +751,7 @@ class ArticleModelBuilder
               updated: updated,
               views: views,
               likes: likes,
+              comments: comments,
               title: title,
               content: content,
               links: _links?.build(),
@@ -892,55 +963,77 @@ class MediaBuilder implements Builder<Media, MediaBuilder> {
   }
 }
 
-class _$CreatedBy extends CreatedBy {
+class _$User extends User {
+  @override
+  final int? id;
   @override
   final String? arcode;
   @override
-  final bool? enabled;
+  final bool enabled;
   @override
   final String? firstName;
   @override
   final String? lastName;
   @override
-  final String? otherNames;
+  final BuiltList<String>? otherNames;
   @override
-  final int? id;
+  final int? profilePicture;
+  @override
+  final String? country;
+  @override
+  final String? referralCode;
+  @override
+  final String? referrer;
+  @override
+  final String? bcWallet;
   @override
   final int? created;
   @override
   final int? updated;
 
-  factory _$CreatedBy([void Function(CreatedByBuilder)? updates]) =>
-      (new CreatedByBuilder()..update(updates))._build();
+  factory _$User([void Function(UserBuilder)? updates]) =>
+      (new UserBuilder()..update(updates))._build();
 
-  _$CreatedBy._(
-      {this.arcode,
-      this.enabled,
+  _$User._(
+      {this.id,
+      this.arcode,
+      required this.enabled,
       this.firstName,
       this.lastName,
       this.otherNames,
-      this.id,
+      this.profilePicture,
+      this.country,
+      this.referralCode,
+      this.referrer,
+      this.bcWallet,
       this.created,
       this.updated})
-      : super._();
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(enabled, r'User', 'enabled');
+  }
 
   @override
-  CreatedBy rebuild(void Function(CreatedByBuilder) updates) =>
+  User rebuild(void Function(UserBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CreatedByBuilder toBuilder() => new CreatedByBuilder()..replace(this);
+  UserBuilder toBuilder() => new UserBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is CreatedBy &&
+    return other is User &&
+        id == other.id &&
         arcode == other.arcode &&
         enabled == other.enabled &&
         firstName == other.firstName &&
         lastName == other.lastName &&
         otherNames == other.otherNames &&
-        id == other.id &&
+        profilePicture == other.profilePicture &&
+        country == other.country &&
+        referralCode == other.referralCode &&
+        referrer == other.referrer &&
+        bcWallet == other.bcWallet &&
         created == other.created &&
         updated == other.updated;
   }
@@ -948,12 +1041,17 @@ class _$CreatedBy extends CreatedBy {
   @override
   int get hashCode {
     var _$hash = 0;
+    _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, arcode.hashCode);
     _$hash = $jc(_$hash, enabled.hashCode);
     _$hash = $jc(_$hash, firstName.hashCode);
     _$hash = $jc(_$hash, lastName.hashCode);
     _$hash = $jc(_$hash, otherNames.hashCode);
-    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jc(_$hash, profilePicture.hashCode);
+    _$hash = $jc(_$hash, country.hashCode);
+    _$hash = $jc(_$hash, referralCode.hashCode);
+    _$hash = $jc(_$hash, referrer.hashCode);
+    _$hash = $jc(_$hash, bcWallet.hashCode);
     _$hash = $jc(_$hash, created.hashCode);
     _$hash = $jc(_$hash, updated.hashCode);
     _$hash = $jf(_$hash);
@@ -962,21 +1060,30 @@ class _$CreatedBy extends CreatedBy {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'CreatedBy')
+    return (newBuiltValueToStringHelper(r'User')
+          ..add('id', id)
           ..add('arcode', arcode)
           ..add('enabled', enabled)
           ..add('firstName', firstName)
           ..add('lastName', lastName)
           ..add('otherNames', otherNames)
-          ..add('id', id)
+          ..add('profilePicture', profilePicture)
+          ..add('country', country)
+          ..add('referralCode', referralCode)
+          ..add('referrer', referrer)
+          ..add('bcWallet', bcWallet)
           ..add('created', created)
           ..add('updated', updated))
         .toString();
   }
 }
 
-class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
-  _$CreatedBy? _$v;
+class UserBuilder implements Builder<User, UserBuilder> {
+  _$User? _$v;
+
+  int? _id;
+  int? get id => _$this._id;
+  set id(int? id) => _$this._id = id;
 
   String? _arcode;
   String? get arcode => _$this._arcode;
@@ -994,13 +1101,32 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   String? get lastName => _$this._lastName;
   set lastName(String? lastName) => _$this._lastName = lastName;
 
-  String? _otherNames;
-  String? get otherNames => _$this._otherNames;
-  set otherNames(String? otherNames) => _$this._otherNames = otherNames;
+  ListBuilder<String>? _otherNames;
+  ListBuilder<String> get otherNames =>
+      _$this._otherNames ??= new ListBuilder<String>();
+  set otherNames(ListBuilder<String>? otherNames) =>
+      _$this._otherNames = otherNames;
 
-  int? _id;
-  int? get id => _$this._id;
-  set id(int? id) => _$this._id = id;
+  int? _profilePicture;
+  int? get profilePicture => _$this._profilePicture;
+  set profilePicture(int? profilePicture) =>
+      _$this._profilePicture = profilePicture;
+
+  String? _country;
+  String? get country => _$this._country;
+  set country(String? country) => _$this._country = country;
+
+  String? _referralCode;
+  String? get referralCode => _$this._referralCode;
+  set referralCode(String? referralCode) => _$this._referralCode = referralCode;
+
+  String? _referrer;
+  String? get referrer => _$this._referrer;
+  set referrer(String? referrer) => _$this._referrer = referrer;
+
+  String? _bcWallet;
+  String? get bcWallet => _$this._bcWallet;
+  set bcWallet(String? bcWallet) => _$this._bcWallet = bcWallet;
 
   int? _created;
   int? get created => _$this._created;
@@ -1010,19 +1136,24 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   int? get updated => _$this._updated;
   set updated(int? updated) => _$this._updated = updated;
 
-  CreatedByBuilder() {
-    CreatedBy._initializeBuilder(this);
+  UserBuilder() {
+    User._initializeBuilder(this);
   }
 
-  CreatedByBuilder get _$this {
+  UserBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
+      _id = $v.id;
       _arcode = $v.arcode;
       _enabled = $v.enabled;
       _firstName = $v.firstName;
       _lastName = $v.lastName;
-      _otherNames = $v.otherNames;
-      _id = $v.id;
+      _otherNames = $v.otherNames?.toBuilder();
+      _profilePicture = $v.profilePicture;
+      _country = $v.country;
+      _referralCode = $v.referralCode;
+      _referrer = $v.referrer;
+      _bcWallet = $v.bcWallet;
       _created = $v.created;
       _updated = $v.updated;
       _$v = null;
@@ -1031,30 +1162,49 @@ class CreatedByBuilder implements Builder<CreatedBy, CreatedByBuilder> {
   }
 
   @override
-  void replace(CreatedBy other) {
+  void replace(User other) {
     ArgumentError.checkNotNull(other, 'other');
-    _$v = other as _$CreatedBy;
+    _$v = other as _$User;
   }
 
   @override
-  void update(void Function(CreatedByBuilder)? updates) {
+  void update(void Function(UserBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  CreatedBy build() => _build();
+  User build() => _build();
 
-  _$CreatedBy _build() {
-    final _$result = _$v ??
-        new _$CreatedBy._(
-            arcode: arcode,
-            enabled: enabled,
-            firstName: firstName,
-            lastName: lastName,
-            otherNames: otherNames,
-            id: id,
-            created: created,
-            updated: updated);
+  _$User _build() {
+    _$User _$result;
+    try {
+      _$result = _$v ??
+          new _$User._(
+              id: id,
+              arcode: arcode,
+              enabled: BuiltValueNullFieldError.checkNotNull(
+                  enabled, r'User', 'enabled'),
+              firstName: firstName,
+              lastName: lastName,
+              otherNames: _otherNames?.build(),
+              profilePicture: profilePicture,
+              country: country,
+              referralCode: referralCode,
+              referrer: referrer,
+              bcWallet: bcWallet,
+              created: created,
+              updated: updated);
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'otherNames';
+        _otherNames?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            r'User', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
