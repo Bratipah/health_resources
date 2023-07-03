@@ -7,10 +7,14 @@ import 'package:health_resources/core/features/healthResources/presentation/bloc
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_states.dart';
+import 'package:health_resources/utils/time_util.dart';
+import 'package:health_resources/utils/utils.dart';
 import '../comments.dart';
 
 class ArticlesDetails extends StatefulWidget {
-  const ArticlesDetails({Key? key}) : super(key: key);
+  const ArticlesDetails({Key? key, required this.postId}) : super(key: key);
+
+  final int postId;
 
   @override
   State<ArticlesDetails> createState() => _ArticlesDetailsState();
@@ -86,6 +90,8 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                   itemCount: _articles.length,
                   itemBuilder: (context, index) {
                     final article = _articles[index];
+                    _articles.map((e) => article.media);
+                    // int next = _articles[index+1];
                     return SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       padding: EdgeInsets.all(13),
@@ -94,7 +100,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "Press Release".toUpperCase(),
+                            article.title?.toUpperCase()?? "",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -109,7 +115,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Last Updated ${article.updated?.toString() ?? ""}",
+                                "Last Updated ${article.updated?.getJustDate()?? ""}",
                                 // "Last Updated 23/02/2023"
                               ),
                               // Text(updated_at),
@@ -132,8 +138,8 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                                   ])),
                             ],
                           ),
-                          Image.asset(
-                            "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
+                          Image.network(
+                            "$myrekod_file_url/${article.media?.toList().firstWhere((element) => element.type == "Image").systemName ?? ""}",
                             // imageurl
                             width: MediaQuery.of(context).size.width,
                             fit: BoxFit.cover,
@@ -231,20 +237,19 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                             ),
                           ),
                           Row(
+                            //Next article image and text
                             children: [
-                              Image.asset(
-                                "assets/christin-hume-Hcfwew744z4-unsplash.jpg",
+                              Image.network(
+                                "$myrekod_file_url/${article.media?.toList().firstWhere((element) => element.type == "Image").systemName ?? ""}",
                                 // imageurl
-                                height: 100,
-                                width: 60,
+                                height: 150,
+                                width: 100,
                               ),
                               SizedBox(
                                 width: 10,
                               ),
                               Text(
-                                // article.title${index}
                                 "Lest We Forget .......".toUpperCase(),
-                                // "$resourcename .......".toUpperCase(),
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],

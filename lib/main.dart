@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_resources/core/features/healthResources/presentation/articles.dart';
+import 'package:health_resources/core/features/healthResources/presentation/comments.dart';
 // import 'package:health_resources/core/features/healthResources/presentation/detailsTest.dart';
 import 'package:health_resources/core/features/healthResources/presentation/widgets/articlesDetails.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
@@ -28,22 +29,22 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
             elevation: 0, // This removes the shadow from all App Bars.
           )),
-      home:
+      home: Comments(),
       // DetailsTest(),
-      Scaffold(
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider<ArticleBloc>(
-                create: (BuildContext context) =>
-                    ArticleBloc(ArticleRepository())),
-            BlocProvider<ArticleDetailsBloc>(
-              create: (BuildContext context) =>
-                  ArticleDetailsBloc(ArticleRepository()),
-            ),
-          ],
-          child: Articles(),
-        ),
-      ),
+      // Scaffold(
+      //   body: MultiBlocProvider(
+      //     providers: [
+      //       BlocProvider<ArticleBloc>(
+      //           create: (BuildContext context) =>
+      //               ArticleBloc(ArticleRepository())),
+      //       BlocProvider<ArticleDetailsBloc>(
+      //         create: (BuildContext context) =>
+      //             ArticleDetailsBloc(ArticleRepository()),
+      //       ),
+      //     ],
+      //     child: Articles(),
+      //   ),
+      // ),
     );
     // ChatPage(),
     // ArticleDetails(),

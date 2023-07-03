@@ -14,7 +14,6 @@ import 'package:health_resources/utils/utils.dart';
 class Articles extends StatefulWidget {
   Articles({Key? key}) : super(key: key);
 
-  int? postId;
 
   @override
   State<Articles> createState() => _ArticlesState();
@@ -90,24 +89,27 @@ class _ArticlesState extends State<Articles> {
                 )
               : Container(
                   padding: EdgeInsets.all(10),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                         builder:  (_) {
-                           return BlocProvider.value(
-                             value: BlocProvider.of<ArticleDetailsBloc>(context),
-                             child: ArticlesDetails(),
-                           );
-                         },
-                      ),
-                    ),
-                    child: ListView.builder(
+                  child: ListView.builder(
                         itemCount: _articles.length,
                         itemBuilder: (context, index) {
                           final article = _articles[index];
                           // final links = article.links?.toList() ?? [];
-                          return Column(
+                          // RegExp pattern = RegExp(r'\b\b');
+                          // String inputString = article.title ?? "No title"+pattern.hasMatch(extractWords(inputString));
+                          // String extractedString = extractWords(inputString);
+                          return GestureDetector(
+                              onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:  (_) {
+                                return BlocProvider.value(
+                                  value: BlocProvider.of<ArticleDetailsBloc>(context),
+                                  child: ArticlesDetails(postId: article.id! ),
+                                );
+                              },
+                            ),
+                          ),
+                            child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -121,7 +123,8 @@ class _ArticlesState extends State<Articles> {
                               ),
                               Text(
                                 // "Press Release".toUpperCase(),
-                                article.title ?? "No title".substring(0, 3),
+                                article.title ?? "No title",
+                                // extractedString,
                                 style: TextStyle(
                                   color: Colors.blue[800],
                                   fontSize: 18,
@@ -132,14 +135,24 @@ class _ArticlesState extends State<Articles> {
                                 height: 10,
                               ),
                               // Html(
-                              //   data: article.content!,
-                              //   onImageTap: (url, context, attributes, element) => {} ,
+                              //   data: article.content?? "",
                               //   style: {
                               //     'p': Style(
-                              //       fontSize: FontSize(18),
-                              //       maxLines: 3,
-                              //       textOverflow: TextOverflow.ellipsis,
-                              //     ),}
+                              //       margin: EdgeInsets.symmetric(vertical: 8.0),
+                              //     ),
+                              //     'b': Style(
+                              //       fontWeight: FontWeight.bold,
+                              //     ),
+                              //   },
+                              //   onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, _) {
+                              //     // Handle link tap here
+                              //   },
+                              //   onImageTap: (String? url, RenderContext context, Map<String, String> attributes, _) {
+                              //     // Handle image tap here
+                              //   },
+                              //     onTapDown: (TapDownDetails details) {
+                              //       // Handle tap down here
+                              //     } as GestureTapDownCallback?,
                               // ),
                               Text(
                                 // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
@@ -190,9 +203,9 @@ class _ArticlesState extends State<Articles> {
                               ),
                               Divider(thickness: 1),
                             ],
+                          ),
                           );
                         }),
-                  ),
                 )),
     );
   }

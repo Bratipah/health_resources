@@ -4,8 +4,10 @@ import 'package:health_resources/core/features/healthResources/domain/repository
 
 @immutable
 abstract class ArticleEvent {}
-
 class FetchArticleEvent extends ArticleEvent {
+
+   FetchArticleEvent();
+
   @override
   List<Object?> get props => [];
 }
