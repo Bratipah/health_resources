@@ -1,67 +1,120 @@
-class CommentModel {
-  int? id;
-  int? org_id;
-  int? user_id;
-  String? created_at;
-  String? end_date;
-  String? updated_at;
-  String? create_date;
-  String? resourcename;
-  String? category;
-  String? content;
-  String? contenttext;
-  String? contenttype;
-  String? imageurl;
-  int? status;
-  String? lang;
+import 'dart:convert';
 
-  CommentModel({this.id,
-    this.org_id,
-    this.user_id,
-    this.created_at,
-    this.end_date,
-    this.updated_at,
-    this.create_date,
-    this.resourcename,
-    this.category,
-    this.content,
-    this.contenttext,
-    this.contenttype,
-    this.imageurl,
-    this.status,
-    this.lang,});
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
+import 'comment_model_serializers.dart';
 
-  CommentModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    org_id = json['org_id'];
-    user_id = json['org_id'];
-    created_at = json['created_at'];
-    updated_at = json['updated_at'];
-    end_date = json['end_date'];
-    content = json['content'];
-    contenttext = json['contenttext'];
-    resourcename = json['resourcename'];
-    category = json['category'];
-    imageurl = json['imageurl'];
-    status = json['status'];
-    lang = json['lang'];
+part 'comment_model.g.dart';
+
+abstract class CommentModel
+    implements Built<CommentModel, CommentModelBuilder> {
+
+  User get createdBy;
+  int get id;
+  int get created;
+  int get updated;
+  String get content;
+  bool get isHidden;
+
+  CommentModel._();
+  factory CommentModel(
+      [void Function(CommentModelBuilder) updates]) =
+  _$CommentModel;
+
+  static Serializer<CommentModel> get serializer =>
+      _$commentModelSerializer;
+
+  String toJson() {
+    return json.encode(
+        serializers.serializeWith(CommentModel.serializer, this));
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id ;
-    data['org_id'] = this.org_id;
-    data['user_id'] = this.user_id;
-    data['created_at'] = this.created_at;
-    data['updated_at'] = this.updated_at;
-    data['end_date'] = this.end_date;
-    data['content'] = this.content;
-    data['contenttext'] = this.contenttext;
-    data['resourcename'] = this.resourcename;
-    data['category'] = this.category;
-    data['imageurl'] = this.imageurl;
-    data['status'] = this.status;
-    data['lang'] = this.lang;
-    return data;
+  static CommentModel? fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(
+        CommentModel.serializer, jsonString);
+  }
+  static BuiltList<CommentModel> listFromJson(dynamic value) =>
+      BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
+
+  static void _initializeBuilder(CommentModelBuilder builder) => builder
+    ..id = null
+    ..isHidden = null
+    ..content = null
+    ..created = null
+    ..id = null
+    ..updated = null;
+}
+
+abstract class User implements Built<User, UserBuilder> {
+  @BuiltValueField(wireName: 'id')
+  int? get id;
+
+  @BuiltValueField(wireName: 'arcode')
+  String? get arcode;
+
+  @BuiltValueField(wireName: 'enabled')
+  bool get enabled;
+
+  @BuiltValueField(wireName: 'firstName')
+  String? get firstName;
+
+  @BuiltValueField(wireName: 'lastName')
+  String? get lastName;
+
+  @BuiltValueField(wireName: 'otherNames')
+  BuiltList<String>? get otherNames;
+
+  @BuiltValueField(wireName: 'profilePicture')
+  int? get profilePicture;
+
+  @BuiltValueField(wireName: 'country')
+  String? get country;
+
+  @BuiltValueField(wireName: 'referralCode')
+  String? get referralCode;
+
+  @BuiltValueField(wireName: 'referrer')
+  String? get referrer;
+
+  @BuiltValueField(wireName: 'bc_wallet')
+  String? get bcWallet;
+
+  @BuiltValueField(wireName: 'created')
+  int? get created;
+
+  @BuiltValueField(wireName: 'updated')
+  int? get updated;
+
+  User._();
+
+  factory User([updates(UserBuilder b)]) = _$User;
+
+  static Serializer<User> get serializer => _$userSerializer;
+
+  static void _initializeBuilder(UserBuilder builder) =>
+      builder
+        ..id = 0
+        ..arcode = null
+        ..enabled = false
+        ..firstName = null
+        ..lastName = null
+        ..otherNames = null
+        ..profilePicture = null
+        ..country = null
+        ..referralCode = null
+        ..referrer = null
+        ..bcWallet = null
+        ..created = null
+        ..updated = null;
+
+  static User? fromJson(Map<String, dynamic> jsonString) {
+    return serializers.deserializeWith(
+        User.serializer, jsonString);
+  }
+
+  String toJson() {
+    return json.encode(
+        serializers.serializeWith(User.serializer, this));
   }
 }

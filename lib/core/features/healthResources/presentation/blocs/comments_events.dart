@@ -6,7 +6,7 @@ abstract class CommentsEvent extends Equatable {
   const CommentsEvent();
 
 }
-class LoadCommentsEvent extends CommentsEvent {
+class FetchCommentsEvent extends CommentsEvent {
   @override
   List<Object> get props => [];
 }

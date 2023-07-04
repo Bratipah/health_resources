@@ -197,47 +197,6 @@ abstract class Media implements Built<Media, MediaBuilder> {
     ..updated = null;
 }
 
-// abstract class CreatedBy implements Built<CreatedBy, CreatedByBuilder> {
-//   //@BuiltValueField(wireName: "arcode")
-//   //String? get arcode;
-//   bool? get enabled;
-//   String? get firstName;
-//   String? get lastName;
-//   BuiltList<String>? get otherNames;
-//   int? get id;
-//   int? get created;
-//   int? get updated;
-//
-//   CreatedBy._();
-//
-//   factory CreatedBy([void Function(CreatedByBuilder) updates]) = _$CreatedBy;
-//
-//   static Serializer<CreatedBy> get serializer => _$createdBySerializer;
-//
-//   String toJson() {
-//     return json
-//         .encode(serializers.serializeWith(CreatedBy.serializer, this));
-//
-//   }
-//
-//   static CreatedBy? fromJson(Map<String, dynamic> jsonString) {
-//     return serializers.deserializeWith(
-//         CreatedBy.serializer, jsonString);
-//   }
-//   static BuiltList<CreatedBy> listFromJson(dynamic value) =>
-//       BuiltList.from(value.map((value) => fromJson(value)).toList(growable: false));
-//
-//   static void _initializeBuilder(CreatedByBuilder builder) => builder
-//     // ..arcode = null
-//     ..enabled = null
-//     ..created = null
-//     ..firstName = null
-//     ..lastName = null
-//     ..id = null
-//     ..otherNames = null
-//     ..updated = null;
-// }
-
 abstract class User implements Built<User, UserBuilder> {
   @BuiltValueField(wireName: 'id')
   int? get id;

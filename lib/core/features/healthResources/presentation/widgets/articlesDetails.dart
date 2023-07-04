@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/articleDetails_blocs.dart';
+import 'package:health_resources/core/features/healthResources/presentation/blocs/comment_blocs.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_events.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
@@ -10,6 +11,7 @@ import 'package:health_resources/core/features/healthResources/presentation/bloc
 import 'package:health_resources/utils/time_util.dart';
 import 'package:health_resources/utils/utils.dart';
 import '../comments.dart';
+import 'commentsLikes.dart';
 
 class ArticlesDetails extends StatefulWidget {
   const ArticlesDetails({Key? key, required this.postId}) : super(key: key);
@@ -100,7 +102,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            article.title?.toUpperCase()?? "",
+                            article.title?.toUpperCase() ?? "",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
@@ -115,7 +117,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Last Updated ${article.updated?.getJustDate()?? ""}",
+                                "Last Updated ${article.updated?.getJustDate() ?? ""}",
                                 // "Last Updated 23/02/2023"
                               ),
                               // Text(updated_at),
@@ -131,10 +133,10 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                                       ),
                                     ),
                                     TextSpan(
-                                        // text: '1265 view(s)'
-                                        text:
-                                            "${article.views?.toString()} view(s)",
-                                        ),
+                                      // text: '1265 view(s)'
+                                      text:
+                                          "${article.views?.toString()} view(s)",
+                                    ),
                                   ])),
                             ],
                           ),
@@ -147,58 +149,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                           SizedBox(
                             height: 10,
                           ),
-                          IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(
-                                          Icons.chat_bubble_outlined,
-                                          color: Colors.black26,
-                                          size: 22,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'Comments (${article.comments ?? "0"})',
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                VerticalDivider(
-                                  color: Colors.black26,
-                                  thickness: 2,
-                                  indent: 0.5,
-                                ),
-                                Text.rich(
-                                  TextSpan(
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold),
-                                    children: [
-                                      WidgetSpan(
-                                        child: Icon(
-                                          Icons.favorite,
-                                          color: Colors.blue[900],
-                                        ),
-                                      ),
-                                      TextSpan(text: 'Likes (${article.likes})'
-                                          // text:
-                                          //     "${article.likes?.toString} (4)"
-                                          ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          CommentsLikes(icon1: Icons.chat_bubble_outline_outlined,iconText1:'Comments (${article.comments ?? "0"})',icon2:Icons.favorite ,iconText2: 'Likes (${article.likes})',),
                           Divider(
                             thickness: 1,
                           ),
@@ -207,8 +158,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                           //         "and shifting LNG trade help fill the gap in European supply. "
                           //         "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
                           //         "The outlook for 2023 will depend on the speed of China’s reopening as well as LNG market dynamics.Natural gas prices saw large falls and were exceptionally volatile in the second half of 2022, driven by dynamics in the European markets.</p> <b>read more</b>"),
-                          Text(
-                              article.content?? ""
+                          Text(article.content ?? ""
                               // "Global natural gas prices tumbled in the second half of 2022, from the heights reached in August. Unseasonably warm weather, improved energy efficiency, and behavioral changes in gas consumption contributed to the decline. A reduction in Russian natural gas production and exports to Europe took place, "
                               //     "and shifting LNG trade help fill the gap in European supply. "
                               //     "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
@@ -223,7 +173,7 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                               //     "This may change with the ongoing conflict in Ukraine, potential reductions in Russian pipeline exports to Europe (still 10% of Europe's supply), and increased global competition for LNG as China lifts its lockdown policies. "
                               //     "In the longer term, the drop in demand for Russian gas and shifts in LNG trade are expected to continue due to increased focus on energy security in Europe. This is driving diversification of energy sources, for example, Europe will boost LNG import capacity by 40 bcm by 2023 and increase investment in renewable energy. "
                               //
-                          ),
+                              ),
                           Divider(
                             thickness: 1,
                           ),
@@ -272,8 +222,16 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                const Comments()),
+                                          builder: (_) {
+                                            return BlocProvider.value(
+                                              value:
+                                                  BlocProvider.of<CommentsBloc>(
+                                                      context),
+                                              child: Comments(articleId: article.id!,),
+                                              // Comments(postId: article.id!),
+                                            );
+                                          },
+                                        ),
                                       );
                                     },
                                     child: Container(
