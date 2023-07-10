@@ -3,6 +3,8 @@ import 'package:health_resources/core/features/healthResources/presentation/arti
 import 'package:health_resources/core/features/healthResources/presentation/comments.dart';
 // import 'package:health_resources/core/features/healthResources/presentation/detailsTest.dart';
 import 'package:health_resources/core/features/healthResources/presentation/widgets/articlesDetails.dart';
+import 'package:health_resources/core/features/healthResources/presentation/widgets/commentsOnComment.dart';
+import 'package:health_resources/core/features/healthResources/presentation/widgets/CommentTry.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/repository.dart';
 import 'package:health_resources/core/features/healthResources/domain/repository/commentRepository.dart';
 import 'package:health_resources/core/features/healthResources/presentation/blocs/article_blocs.dart';

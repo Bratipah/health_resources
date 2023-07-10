@@ -9,7 +9,7 @@ import 'package:health_resources/core/features/healthResources/presentation/bloc
 import 'package:health_resources/core/features/healthResources/presentation/blocs/articleDetails_blocs.dart';
 import 'package:health_resources/core/features/healthResources/domain/models/article_model.dart';
 import 'package:health_resources/utils/utils.dart';
-// import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Articles extends StatefulWidget {
   Articles({Key? key}) : super(key: key);
@@ -73,6 +73,9 @@ class _ArticlesState extends State<Articles> {
                         fontSize: 16,
                       ),
                     )));
+                Navigator.pop(context);
+                // Navigator.of(context).push(new MaterialPageRoute(builder: (_)=>new PageTwo()),)
+                //     .then((val)=>val?_getRequests():null);
               },
             ),
             backgroundColor: Colors.transparent,
@@ -93,10 +96,6 @@ class _ArticlesState extends State<Articles> {
                         itemCount: _articles.length,
                         itemBuilder: (context, index) {
                           final article = _articles[index];
-                          // final links = article.links?.toList() ?? [];
-                          // RegExp pattern = RegExp(r'\b\b');
-                          // String inputString = article.title ?? "No title"+pattern.hasMatch(extractWords(inputString));
-                          // String extractedString = extractWords(inputString);
                           return GestureDetector(
                               onTap: () => Navigator.push(
                             context,
@@ -134,35 +133,26 @@ class _ArticlesState extends State<Articles> {
                               SizedBox(
                                 height: 10,
                               ),
-                              // Html(
-                              //   data: article.content?? "",
-                              //   style: {
-                              //     'p': Style(
-                              //       margin: EdgeInsets.symmetric(vertical: 8.0),
-                              //     ),
-                              //     'b': Style(
-                              //       fontWeight: FontWeight.bold,
-                              //     ),
-                              //   },
-                              //   onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, _) {
-                              //     // Handle link tap here
-                              //   },
-                              //   onImageTap: (String? url, RenderContext context, Map<String, String> attributes, _) {
-                              //     // Handle image tap here
-                              //   },
-                              //     onTapDown: (TapDownDetails details) {
-                              //       // Handle tap down here
-                              //     } as GestureTapDownCallback?,
-                              // ),
-                              Text(
-                                // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
-                                article.content ?? "",
-                                maxLines: 3,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                ),
+                              Html(
+                                data: article.content?? "",
+                                style: {
+                                  'p': Style(
+                                    fontSize: FontSize(10.0),
+                                  ),
+                                  'b': Style(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                }
                               ),
+                              // Text(
+                              //   // "In this article, we'll explore how your approach to investing and finance may change at different stages of life and then offer some tips on how to adapt your investment strategy to meet your changing needs.",
+                              //   article.content ?? "",
+                              //   maxLines: 3,
+                              //   overflow: TextOverflow.ellipsis,
+                              //   style: TextStyle(
+                              //     color: Colors.black54,
+                              //   ),
+                              // ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,

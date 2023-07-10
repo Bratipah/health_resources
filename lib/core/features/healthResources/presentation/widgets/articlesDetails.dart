@@ -12,6 +12,7 @@ import 'package:health_resources/utils/time_util.dart';
 import 'package:health_resources/utils/utils.dart';
 import '../comments.dart';
 import 'commentsLikes.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class ArticlesDetails extends StatefulWidget {
   const ArticlesDetails({Key? key, required this.postId}) : super(key: key);
@@ -77,6 +78,8 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                       fontSize: 16,
                     ),
                   )));
+              Navigator.pop(context);
+              // Navigator.pushReplacementNamed(context, '/route')
             },
           ),
           backgroundColor: Colors.transparent,
@@ -153,27 +156,27 @@ class _ArticlesDetailsState extends State<ArticlesDetails> {
                           Divider(
                             thickness: 1,
                           ),
-                          // Html(
-                          //     data: "<p>Global natural gas prices tumbled in the second half of 2022, from the heights reached in August. Unseasonably warm weather, improved energy efficiency, and behavioral changes in gas consumption contributed to the decline. A reduction in Russian natural gas production and exports to Europe took place, "
-                          //         "and shifting LNG trade help fill the gap in European supply. "
-                          //         "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
-                          //         "The outlook for 2023 will depend on the speed of China’s reopening as well as LNG market dynamics.Natural gas prices saw large falls and were exceptionally volatile in the second half of 2022, driven by dynamics in the European markets.</p> <b>read more</b>"),
-                          Text(article.content ?? ""
-                              // "Global natural gas prices tumbled in the second half of 2022, from the heights reached in August. Unseasonably warm weather, improved energy efficiency, and behavioral changes in gas consumption contributed to the decline. A reduction in Russian natural gas production and exports to Europe took place, "
-                              //     "and shifting LNG trade help fill the gap in European supply. "
-                              //     "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
-                              //     "The outlook for 2023 will depend on the speed of China’s reopening as well as LNG market dynamics.Natural gas prices saw large falls and were exceptionally volatile in the second half of 2022, driven by dynamics in the European markets. "
-                              //     "The European gas price has fallen more than 70% after reaching an all-time high in August 2022 and is now below its price prior the end of 2021 Q3. In the United States, prices have dropped to an 18-month low, a stark turnaround from last year when they reached their highest level since 2008. In Japan, the benchmark reached an all-time high in September 2022; this benchmark remains high due to the predominance of contracted prices. Historically, regional gas benchmarks differ significantly, largely due to transportation constraints, although price gaps have narrowed in recent years due to rising flows of LNG. The war in Ukraine changed this underlying dynamic by impacting trade flows and benchmarks worldwide. Russian natural gas production was 15% lower than the 2017-21 average in the latter half of 2022 as Russia's was unable to redirect its pipeline exports "
-                              //     " average. U.S. exports, however, have been limited by the continued outage of the Freeport LNG export terminal and this has put downward pressure on prices. "
-                              //     "LNG trade underwent a marked redirection in 2022 as EU demand for LNG surged to replace Russian pipeline imports. "
-                              //     "Amid high European prices, global LNG cargoes were redirected to Europe. In the third quarter of 2022, two-thirds of US LNG exports went to Europe, "
-                              //     "which was three times more than in 2021Q3. Meanwhile, China’s LNG imports were 85% lower as demand for natural gas shrank due to COVID-19 restrictions, helping to ease the shortage of LNG. Nonetheless, "
-                              //     "the surge in demand for LNG from Europe reduced the amount available for other countries like Bangladesh and Pakistan, leading to electricity outages. "
-                              //     "Risks to the natural gas outlook. Futures markets predict lower natural gas prices in 2023, but higher than the 2017-21 average until end-2026.  "
-                              //     "This may change with the ongoing conflict in Ukraine, potential reductions in Russian pipeline exports to Europe (still 10% of Europe's supply), and increased global competition for LNG as China lifts its lockdown policies. "
-                              //     "In the longer term, the drop in demand for Russian gas and shifts in LNG trade are expected to continue due to increased focus on energy security in Europe. This is driving diversification of energy sources, for example, Europe will boost LNG import capacity by 40 bcm by 2023 and increase investment in renewable energy. "
-                              //
-                              ),
+                          Html(
+                              data: "<p>Global natural gas prices tumbled in the second half of 2022, from the heights reached in August. Unseasonably warm weather, improved energy efficiency, and behavioral changes in gas consumption contributed to the decline. A reduction in Russian natural gas production and exports to Europe took place, "
+                                  "and shifting LNG trade help fill the gap in European supply. "
+                                  "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
+                                  "The outlook for 2023 will depend on the speed of China’s reopening as well as LNG market dynamics.Natural gas prices saw large falls and were exceptionally volatile in the second half of 2022, driven by dynamics in the European markets.</p> <b>read more</b>"),
+                          // Text(article.content ?? ""
+                          //     // "Global natural gas prices tumbled in the second half of 2022, from the heights reached in August. Unseasonably warm weather, improved energy efficiency, and behavioral changes in gas consumption contributed to the decline. A reduction in Russian natural gas production and exports to Europe took place, "
+                          //     //     "and shifting LNG trade help fill the gap in European supply. "
+                          //     //     "Lower demand and strong LNG inflows resulted in European natural gas inventories being at a record high for this time of the year. "
+                          //     //     "The outlook for 2023 will depend on the speed of China’s reopening as well as LNG market dynamics.Natural gas prices saw large falls and were exceptionally volatile in the second half of 2022, driven by dynamics in the European markets. "
+                          //     //     "The European gas price has fallen more than 70% after reaching an all-time high in August 2022 and is now below its price prior the end of 2021 Q3. In the United States, prices have dropped to an 18-month low, a stark turnaround from last year when they reached their highest level since 2008. In Japan, the benchmark reached an all-time high in September 2022; this benchmark remains high due to the predominance of contracted prices. Historically, regional gas benchmarks differ significantly, largely due to transportation constraints, although price gaps have narrowed in recent years due to rising flows of LNG. The war in Ukraine changed this underlying dynamic by impacting trade flows and benchmarks worldwide. Russian natural gas production was 15% lower than the 2017-21 average in the latter half of 2022 as Russia's was unable to redirect its pipeline exports "
+                          //     //     " average. U.S. exports, however, have been limited by the continued outage of the Freeport LNG export terminal and this has put downward pressure on prices. "
+                          //     //     "LNG trade underwent a marked redirection in 2022 as EU demand for LNG surged to replace Russian pipeline imports. "
+                          //     //     "Amid high European prices, global LNG cargoes were redirected to Europe. In the third quarter of 2022, two-thirds of US LNG exports went to Europe, "
+                          //     //     "which was three times more than in 2021Q3. Meanwhile, China’s LNG imports were 85% lower as demand for natural gas shrank due to COVID-19 restrictions, helping to ease the shortage of LNG. Nonetheless, "
+                          //     //     "the surge in demand for LNG from Europe reduced the amount available for other countries like Bangladesh and Pakistan, leading to electricity outages. "
+                          //     //     "Risks to the natural gas outlook. Futures markets predict lower natural gas prices in 2023, but higher than the 2017-21 average until end-2026.  "
+                          //     //     "This may change with the ongoing conflict in Ukraine, potential reductions in Russian pipeline exports to Europe (still 10% of Europe's supply), and increased global competition for LNG as China lifts its lockdown policies. "
+                          //     //     "In the longer term, the drop in demand for Russian gas and shifts in LNG trade are expected to continue due to increased focus on energy security in Europe. This is driving diversification of energy sources, for example, Europe will boost LNG import capacity by 40 bcm by 2023 and increase investment in renewable energy. "
+                          //     //
+                          //     ),
                           Divider(
                             thickness: 1,
                           ),
