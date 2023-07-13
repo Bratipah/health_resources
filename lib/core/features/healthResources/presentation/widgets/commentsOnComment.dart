@@ -57,7 +57,6 @@ class _CommentsOnCommentState extends State<CommentsOnComment> {
         }
       },
       child: Scaffold(
-
         body: Container(
           margin: EdgeInsets.only(top: 5),
           padding: EdgeInsets.all(10),

@@ -34,4 +34,15 @@ class CommentRepository {
       debugPrint("Api comment call made with resp ${response.body}");
       throw Exception('Failed to fetch comments');
     }
-}}
+}
+  Future<List<CommentModel>>? create({required String commentText}) async {
+    try {
+      await http.post(
+          Uri.parse(myrekod_comments_url),
+          headers: {"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJhY2Nlc3NvciI6IjQiLCJhY2Nlc3NpbmciOiIzIiwicHJvdmlkZXIiOiIyIiwiZnVuY3Rpb24iOiJCYXNpY0F1dGhlbnRpY2F0aW9uIiwic3ViIjoiQWZ5YVJla29kIFRva2VuIiwiYXVkIjoiTm9uZSBvZiB5b3VyIGJpeiB3YXggOikiLCJpc3MiOiIkMmEkMTAkSTRVaEE4UW1JakxLZ3BRZk5MOFpZLlZpeU8xbDlOYnpFNzRiOFJsbnJjLmJhUERmanMvSE8iLCJpYXQiOjE2ODgzNzA2NTQsImV4cCI6MTY4ODM4ODY1NH0.rEyKEBhy5c4nkQ-iESMJIVTcNtEz-QG5NfcRJ-Z-SG9aFji7Gf57xwYO-ELGkplz-4tgrD1bYnWnICl5IyGWGQ"}
+      );
+    } catch (e) {
+      throw Exception('Failed to fetch comments');
+    }
+  }
+}

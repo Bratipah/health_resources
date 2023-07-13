@@ -1,14 +1,12 @@
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:health_resources/core/features/healthResources/domain/models/comment_model.dart';
-import 'package:built_collection/built_collection.dart';
+import 'article_model.dart';
 
-
-
-part 'comment_model_serializers.g.dart';
+part 'article_model_serializers.g.dart';
 
 @SerializersFor([
-  CommentModel,
+  ArticleModel,
+  Media,
   User,
 ])
 
